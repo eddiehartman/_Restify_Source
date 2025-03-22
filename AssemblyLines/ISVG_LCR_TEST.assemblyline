@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="39f077ae-f91f-4188-ba84-d4589e0ded85" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="ISVG_LCR_TEST" modified="Thu Mar 20 14:51:24 CET 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+    <AssemblyLine name="ISVG_LCR_TEST">
+        <ModTime>1742478684589</ModTime>
+        <Settings/>
+        <Hooks/>
+        <CheckpointConfig/>
+        <SandboxConfig/>
+        <SimulationConfig>
+            <SimulationStates>
+                <Component name="ITIMRestClientConnector" state="Enabled"/>
+            </SimulationStates>
+            <ProxySettings/>
+        </SimulationConfig>
+        <LogConfig/>
+        <ContainerEF name="EntryFeedContainer">
+            <Connector name="ITIMRestClientConnector">
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1742305281964</ModTime>
+                <ConnectorMode>Iterator</ConnectorMode>
+                <ConnectorState>Enabled</ConnectorState>
+                <Configuration>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <parameter name="action">GET</parameter>
+                    <parameter encrypted="true" name="password">HAdUAugba67Q5mtIKVcENaZ1r1Fb9/6TG/TLUVjf7taGIKd8oXOX5xhdTELpCHlxhEgSP3jClvewPBZgpXwWNntIZU61YLqNoZNnQWyz6TQ2+fyrpa2vgKin/rIvC6gtU6lmk1l4WaeESHeaPDSRTu9c+c2Cp5v8hpQYHE2NrWU=</parameter>
+                    <parameter name="path">/lifecyclerule</parameter>
+                    <parameter name="url">https://192.168.2.39:30943/openapi/ui/#</parameter>
+                    <parameter name="username">itim manager</parameter>
+                </Configuration>
+                <Parser>
+                    <InheritFrom>[parent]</InheritFrom>
+                </Parser>
+                <AttributeMap name="Input">
+                    <InheritFrom>[parent]</InheritFrom>
+                    <AttributeMapItem>
+                        <Name>*</Name>
+                        <Type>simple</Type>
+                        <Simple>*</Simple>
+                    </AttributeMapItem>
+                </AttributeMap>
+                <AttributeMap name="Output">
+                    <InheritFrom>[parent]</InheritFrom>
+                </AttributeMap>
+                <DeltaSettings>
+                    <WhenToCommit>After every database operation</WhenToCommit>
+                    <RowLocking>SERIALIZABLE</RowLocking>
+                    <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
+                </DeltaSettings>
+                <Schema name="Input">
+                    <InheritFrom>[parent]</InheritFrom>
+                </Schema>
+                <Schema name="Output">
+                    <InheritFrom>[parent]</InheritFrom>
+                </Schema>
+                <LinkCriteria>
+                    <InheritFrom>[parent]</InheritFrom>
+                </LinkCriteria>
+                <Hooks>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <Hook name="before_initialize">
+                        <InheritFrom>[no inheritance]</InheritFrom>
+                        <Name>before_initialize</Name>
+                        <Script><![CDATA[resthost = "https://192.168.2.39:30943";
+	
+	//Setup connector 
+	myHttpConn = system.getConnector("ibmdi.HTTPClient");
+	//Prepare call to get JSESSIONID
+	myHttpConn.setParam("url",resthost + "/itim/restlogin/login.jsp");
+	myHttpConn.setParam("method","GET");
+	myHttpConn.initialize(null);
+	//Perform call
+	httpReply = myHttpConn.queryReply(null);
+	//Retrieve JSESSIONID
+	JSESSIONID = httpReply.getString("http.Set-Cookie");
+
+	//Prepare call to get LTPAToken2
+	myHttpConn.setParam("url",resthost + "/itim/j_security_check");
+	myHttpConn.setParam("method","POST");
+	myHttpConn.initialize(null);
+	
+	//Configure the call
+	var httpcall = system.newEntry();
+	httpcall.setAttribute("http.Content-Type","application/x-www-form-urlencoded");
+	httpcall.setAttribute("http.Cookie",JSESSIONID);
+	//Set body to userid/password
+	httpcall.setAttribute("http.body","j_username=itim manager&j_password=Passw0rd");
+	//Perform call
+	httpReply = myHttpConn.queryReply(httpcall);
+	//Retrieve LTPAToken2
+	LTPAToken2 = httpReply.getString("http.Set-Cookie");
+	
+	//Prepare call to get CSRFToken
+	myHttpConn.setParam("url",resthost + "/itim/rest/systemusers/me");
+	myHttpConn.setParam("method","POST");
+	myHttpConn.initialize(null);
+	
+	//Configure the call
+	var httpcall = system.newEntry();
+	httpcall.setAttribute("http.Cookie",[JSESSIONID,LTPAToken2]);
+	//Perform call
+	httpReply = myHttpConn.queryReply(httpcall);
+	//Retrieve CSRFToken
+	CSRFToken = httpReply.getString("http.CSRFToken");]]></Script>
+                        <Enabled>true</Enabled>
+                    </Hook>
+                </Hooks>
+                <CheckpointConfig/>
+                <SandboxConfig/>
+                <Reconnect>
+                    <InheritFrom>[parent]</InheritFrom>
+                    <ReconnectRules/>
+                </Reconnect>
+                <Operations/>
+                <PoolDefinition>
+                    <InheritFrom>[parent]</InheritFrom>
+                </PoolDefinition>
+                <PoolInstance/>
+            </Connector>
+        </ContainerEF>
+        <ContainerDF name="DataFlowContainer"/>
+        <ThreadOptions/>
+        <Operations/>
+        <InitParams>
+            <Schema name="AssemblyLineInitParams"/>
+        </InitParams>
+    </AssemblyLine>
+</MetamergeConfig>

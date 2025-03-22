@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="e3650444-719f-46ad-a7ad-030cd0e32027" created="Sun Dec 08 12:23:38 CET 2024" createdBy="eddiehartman" main="OAuth Class" modified="Sun Dec 08 12:23:42 CET 2024" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="OAuth Class">
+        <ModTime>1733657022206</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[var OAUTH = null; // Will be instantiated below
+
+// OAUTH is an object (as all js functions are) and is instantiated using this function (another object).
+function OAuth2(params) {
+	//
+	// -- Token this.request parameters
+	//
+	this.params = params;
+	this.debug = params.debug || false;
+	this.url = params.url || "* url not specified *";
+
+	//
+	// -- Returns form-urlencoded string of an object
+	//
+	this.urlEncode = function(obj) {
+		var arr = [];
+		for (var f in obj) {
+			arr.push(f + "=" + obj[f]);
+		}
+		return arr.join("&");
+	}
+
+	// 
+	// -- Returns an initialized HTTP Client Connector
+	//
+	this.setupHTTPClient = function(params) {
+		if (!this.httpClient) {
+			this.httpClient = system.loadConnector("ibmdi.HTTPClient");
+			for (var paramName in params) {
+				this.httpClient.setParam(paramName, params[paramName])
+			}
+			this.httpClient.initialize(null);
+		}
+		return this.httpClient
+	}
+
+	//
+	// -- Returns the access token if we have an access token that hasn't expired
+	//
+	this.getToken = function() {
+		return this.response ? this.response.access_token : null;
+	}
+
+	//
+	// -- Sends a this.request to get a new access token
+	// -- @return String Access token
+	// -- @throws Exception
+	//
+	this.requestToken = function() {
+
+		// -- If we already have a valid token return that
+		if (this.getToken() != null) {
+			if (this.debug) {
+				task.logmsg("OAuth: returning current token");
+			}
+			return this.getToken();
+		}
+
+		//
+		// -- Create this.request entry object
+		//
+		this.request = system.newEntry();
+		this.request["url"] = this.url;
+		this.request["http.body"] = this.urlEncode(this.params);
+		this.request["http.method"] = "POST";
+		this.request["http.content-type"] = "application/x-www-form-urlencoded";
+		this.request["grant_type"] = this.params["grant_type"];
+		//		this.request["grant_type"] = "client_credentials";
+		this.request["scope"] = this.params["scope"];
+		//		this.request["scope"] = "gmail.readonly";
+		this.request["redirect_uri"] = this.params["redirect_uri"] | "url:itef:wg:oauth:2.0:oob";
+		this.request["client_id"] = this.params["client_id"];
+		this.request["client_secret"] = this.params["client_secret"];
+
+		if (this.debug) {
+			task.logmsg("Requesting AccessToken: url=" + this.url);
+			task.logmsg(this.request.toJSON());
+		}
+
+		do {
+			//
+			// -- Send token this.request
+			//
+			this.setupHTTPClient(this.params);
+			var response = this.httpClient.queryReply(this.request);
+			var httpCode = response.getString("http.responseCode");
+
+			// Log and check response for errors
+			if (this.debug) {
+				task.logmsg("this.request Access Token Response");
+				task.logmsg("" + this.response);
+			}
+			if (response && response["http.bodyAsString"] != null) {
+				var json = response["http.bodyAsString"].getValue();
+
+				// Try to parse it
+				try {
+					this.response = fromJson(json);
+	 				// See if it's an error
+					if (this.response.error) {
+						var err = "Error: " + this.response.error + ": " + this.response.error_description;
+						this.response = null;
+						throw err;
+					}					
+				} catch (parsingException) {
+					// I guess it's not JSON
+					this.response = {error: "Return is NOT JSON!"}
+				}
+			}
+
+			// Check for redirect
+			if (httpCode == 302) {
+				var location = response.getString("http.Location");
+				task.logmsg("Redirecting to: " + location);
+				this.httpClient.setParam("url", location);
+				this.httpClient.terminate();
+				this.httpClient.initialize(null);
+			}
+		} while (httpCode == 302 && location.toLowerCase().indexOf("error") < 0)
+
+		// Return the token	
+		return this.getToken();
+
+	};
+}
+
+// Return the OAUTH object itself
+function getOAUTH() {
+	return OAUTH
+}
+
+// Returns the OAuth access token
+function getOAuthAccessToken(args) {
+	// If this is the first time called, set up the OAuth2 object
+	if (OAUTH == null) {
+		type = args["grant_type"];
+		if (type != "password") {
+			args.grant_type = "client_credentials";
+		}
+		if (args.debug) {
+			task.logmsg("Create OAuth2 this.request");
+			task.logmsg(work.fromJSON(toJson(args)));
+		}
+		OAUTH = new OAuth2(args);
+	}
+	return OAUTH.requestToken();
+}
+
+// Returns a delimited string with the full stacktrace for the passed Exception e
+function fullStacktrace(e, delimArg) {
+	var delim = delimArg || "\n";
+	var starry = [];
+	// Log the full stack trace
+	var stackTrace = e.getStackTrace(); // Get the stack trace as an array
+	for (var i = 0; i < stackTrace.length; i++) {
+		starry.push(stackTrace[i].toString())
+	}
+	return starry.join(delim)
+}]]></parameter>
+    </Script>
+</MetamergeConfig>

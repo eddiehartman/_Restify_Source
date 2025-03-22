@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="fb9993fd-b1a7-4ef7-8cac-279453c826e8" created="Wed Feb 12 14:52:09 CET 2025" createdBy="eddiehartman" main="called_AL" modified="Wed Feb 12 14:54:17 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <AssemblyLine name="called_AL">
+        <ModTime>1739368457003</ModTime>
+        <Settings/>
+        <Hooks/>
+        <CheckpointConfig/>
+        <SandboxConfig/>
+        <SimulationConfig>
+            <SimulationStates>
+                <Component name="Do something" state="Enabled"/>
+            </SimulationStates>
+            <ProxySettings/>
+        </SimulationConfig>
+        <LogConfig/>
+        <ContainerEF name="EntryFeedContainer"/>
+        <ContainerDF name="DataFlowContainer">
+            <ModTime>1739368457003</ModTime>
+            <Script name="Do something">
+                <ModTime>1739368457003</ModTime>
+                <parameter name="script"><![CDATA[i = 1; 
+i++
+task.logmsg(i)]]></parameter>
+            </Script>
+        </ContainerDF>
+        <ThreadOptions/>
+        <Operations/>
+        <InitParams>
+            <Schema name="AssemblyLineInitParams"/>
+        </InitParams>
+    </AssemblyLine>
+</MetamergeConfig>

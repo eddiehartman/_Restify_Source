@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="6310e846-ba8f-4323-b89b-4be185c20399" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class 20250318" modified="Thu Mar 20 14:51:24 CET 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+    <Script name="RESTCLIENT class 20250318">
+        <ModTime>1742478684498</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[// 20250116 1116 Created
+// 20250121 1146 Finishing (I hope) the creation of this Class - vrs.0.9
+// 20250121 2104 RestClientConnector form working! RESTCLIENT class doing its job both in the test AL and in the Form
+// 20250123 1819 Tightening up code
+// 20250128 2122 Fixing httpEntry() so it does not fail on argument = null
+// 20250130 1243 Making sure this class works both inside and outside a Connector
+// 20250131 1942 Made this.logmsg() write to both System.out and main.logmsg
+
+// This is the class that provides methods for making HTTP requests
+
+function RESTCLIENT(args) {
+	this.baseUrl = (args.baseUrl || "").trim();
+	this.authUrl = args.authUrl || "";
+	this.apikey = args.apikey || "";
+	this.username = args.username || ""; 
+	this.password = args.password || "";
+	this.debug = true //args.debug || false;
+	
+	// The HTTP Client Connector to use
+	this.http = system.getConnector("ibmdi.HTTPClient");
+	
+	// Member variables
+	this.requestEntry = system.newEntry();
+	
+	this.token = null;
+	this.sessionId = null;
+	
+	// Own logmsg() to aid in debugging
+	this.logmsg = function(lvl, msg) {
+		if (!lvl) { // undefined, and allows just a call to this.logmsg() to log a carriage return
+			lvl = "INFO";
+			msg = ""
+		} else
+		if (!msg) {
+			msg = lvl;
+			lvl = "INFO"
+		}
+		
+		if ("DEBUG".equalsIgnoreCase(lvl)) {
+			// Write to console out also
+			java.lang.System.out.println("|" + this.LJ(lvl,5) + "| " + msg);
+		}
+		
+		//if (form && this.debug) this.alert("RESTCLIENT.logmsg: " + msg);
+		//this.alert("task: " + (typeof task) + " - " + (task instanceof com.ibm.di.server.AssemblyLine));
+		
+		// This to allow it to be used by Connector Form Event script
+		//if (task && task instanceof com.ibm.di.server.AssemblyLine) 	task.logmsg(lvl, msg)
+		main.logmsg(lvl, msg);
+		java.lang.System.out.println(((lvl == "INFO") ? "" : lvl) + msg)
+	}
+
+	// REST Client http-call method. The first lines of code show you the parameters you can send in the 'param' JS object
+	this.makeRequest = function(params) {
+		// Get token if necessary
+		if (!this.token && !params.token) {
+			this.getToken();
+		} 
+		
+		//if (form && this.debug) this.alert("RESTCLIENT.makeRequest(" + toJson(params) + "}");
+			
+		// Here come the various local variables set from parameters passed OR default values
+		var verb = params.verb || "GET";
+		var url = params.url || this.throwException("makeRequest called with no URL");
+		var body = params.body || null;
+		var ctype = params.ctype || "application/json";
+		var where = params.where || "";
+		var headers = params.headers || {};
+		var gettingToken = params.token || false;
+		var username = params.username || "";
+		var password = params.password || "";
+		
+		var alreadyImportedCert = false;
+		
+		if (url && !url.startsWith("/")) url = "/" + url;
+		
+		// Empty out the requestEntry before setting it up for the call
+		this.requestEntry.removeAllAttributes();
+		
+		// Add auth artifacts
+		if (!gettingToken) {
+			this.requestEntry["http.X-CSRV-TOKEN"] = this.token;
+			if (this.sessionId) this.requestEntry["http.sessionId"] = this.sessionId;
+		}
+		
+		// Prepend the host (baseURL) if not already there
+		if (url.toLowerCase().indexOf(this.baseUrl.toLowerCase()) < 0) {
+			url = this.baseUrl + url;
+		}
+		
+		// If a body is passed, this must be a POST (I think)
+		if (typeof body !== "undefined" && body !== null) {
+			verb = "POST";
+	
+			if (typeof body != "string") {
+				this.requestEntry["http.body"] = toJson(body);
+			} else {
+				this.requestEntry["http.body"] = body;
+			}
+		}	
+		
+		// Set up the global HTTP Connector
+		this.http.setParam("method", verb.toUpperCase());
+		this.http.setParam("url", url);
+		this.http.setParam("username", username);
+		this.http.setParam("password", password);
+	
+		// Now set up the request entry
+		this.requestEntry["http.url"] = url;
+		this.requestEntry["http.method"] = verb.toUpperCase();
+		this.requestEntry["http.Content-Type"] = ctype;
+		this.requestEntry["http.remote_user"] = username;
+		this.requestEntry["http.remote_password"] = password;
+		
+		this.requestEntry["http.Accept"] = "application/json";
+		this.requestEntry["http.Connection"] = "keep-alive";
+		
+		
+		for (var hdr in headers) {
+			this.requestEntry["http." + hdr] = headers[hdr]
+		}
+		
+		if (this.debug) {
+			this.logDetails({msg : "Request to itim", 
+						obj : this.httpEntry(this.requestEntry, true), 
+						url : url, 
+						verb : verb, 
+						ctype : ctype, 
+						where : where,
+						sent: true});
+		}
+	
+		// Reinitialize the HTTP Client connector so the updated parameters are applied
+		this.http.terminate();
+		this.http.initialize(null);
+	
+		alreadyImportedCert = false; 
+	
+		// Make the call
+		do {
+			var retry = false;
+			try {	
+				this.alert("\nMaking call:" + this.requestEntry + "\n");
+				
+				var retEntry = this.http.queryReply(this.requestEntry);
+
+				var reply = this.parseReply(retEntry);
+			} catch (ex) {
+				//if (form && this.debug) this.alert("Exception: " + ex);
+				
+				// If the token has expired, get a new one
+				if (ex.toString().indexOf("Unauthorized") >= 0) {
+					this.getToken();
+					retry = true
+				} else
+				// Else if we first must import the client cert, then do so. The Server must be restarted after.
+				if (ex instanceof javax.net.ssl.SSLHandshakeException) {
+					if ((ex.toString().indexOf("Certificate chaining error") >= 0) && alreadyImportedCert) {
+						this.throwException("You must restart the SDI server in order for the imported certificate to be trusted.")
+					}
+					this.getCertificate();
+					alreadyImportedCert = true;
+					retry = true;
+				} else {
+					throw ex;
+				}	
+			}
+		} while (retry);
+		
+		retEntry["http.url"] = "http://" + retEntry["http.host"] + retEntry["http.base"];
+		retEntry.removeAttribute("http.url");
+		retEntry.removeAttribute("http.base");
+		retEntry.removeAttribute("http.host");
+		retEntry.removeAttribute("http.method");
+		
+		if (this.debug) {
+			this.logDetails({msg : "Response from itim", 
+						obj : this.httpEntry(retEntry),
+					    entry : retEntry});
+		}
+		
+		//if (form && this.debug) this.alert("reply: " + toJson(reply));
+		
+		return reply;
+	}
+	
+	// Handle terminate to close the connector
+	this.terminate = function() {
+		this.http.terminate();
+		this.token = null;
+		this.sessionId = null
+	}
+	
+	// Handle alerting - @@ DISABLED for now
+	this.alert = function(msg) {
+		if (!this.debug) continue;
+		main.logmsg(msg);
+		java.lang.System.out.println(msg)
+	}	
+		
+	
+	// Get the client certificate from the server and import it to the TDI keystore
+	this.getCertificate = function() {
+		this.logmsg("! Getting client cert");
+		var msg = com.ibm.di.security.GetSSLCertificate.installCertificateFrom(this.baseUrl, 443);
+		this.logmsg("! Result: " + msg)
+	}
+	
+	// Get the authentication token
+	this.getToken = function() {
+		var reply = this.makeRequest({
+				token: true, // Getting a token
+				verb: "POST",
+				url: this.authUrl,
+				ctype: "application/json",
+				where: "getToken()",
+				headers: {
+					Authorization: "Bearer " + this.apikey
+				},
+				body: {
+					username: this.username,
+					password: this.password
+				}
+		});
+		
+		this.token = reply.csrftoken || "";
+		this.sessionId = reply.sessionId || ""
+	}
+
+	this.logDetails = function(params, sent) {
+		sent = sent || false;
+		var msg = params.msg;
+		var obj = params.obj; 
+		var url = params.url;
+		var verb = params.verb;
+		var ctype = params.ctype; 
+		var where = params.where;
+		
+		if (!this.debug) continue;
+		
+		if (msg == null) {
+			msg = "*unknown entry*";
+		}
+	
+		var s = new java.lang.StringBuffer();
+/*		
+		if (where != null) {
+			s.append("\n<<" + where + ">> " + msg);
+		} else {
+			s.append("\n---------> " + msg);
+		}
+*/		
+		
+		if (verb != null) { s.append("   " + verb.toUpperCase()); } 
+		if (ctype != null) { s.append("   " + ctype); } 
+		if (url != null) { s.append("   " + url); } 
+		s.append("\n");
+	
+		if (obj != null) {
+			if (obj instanceof com.ibm.di.entry.Entry) {	
+				s.append(this.httpEntry(obj, sent))	
+			} else {
+				s.append(obj.toString());
+			}
+		}	
+	
+		this.logmsg(s.toString());
+	}
+
+	this.throwException = function(msg) {
+		throw new java.lang.Exception(msg);
+	}
+
+	// Checks the validity of the reply and sets up for Iteration
+	this.parseReply = function(replyEntry) {
+		if (replyEntry === null) { return } 
+		
+		var status = replyEntry.getString("http.responseCode");
+	
+		// Check the return status
+		if (status == "401") { // Unauthorized - time to renew the token
+			this.throwException("Unauthorized")
+		}
+		if (!status.startsWith("2")) {
+			this.throwException("Error response from ITIM. Response code: " 
+								+ status
+								+ "    Message: " + replyEntry.getString("http.responseMsg"));
+		}
+		
+		// Now parse the body
+		var body = replyEntry.getString("http.bodyAsString");
+	
+		try {
+			var reply = fromJson(body);
+		} catch (ex) {
+			this.throwException("Error parsing return payload from itim: " + ex.toString()
+							+ "\n*** dump of reply ***\n" 
+							+ replyEntry)
+		}
+			
+		return reply;
+	}
+	
+	// Left justified text
+	this.LJ = function(txt, len) {
+		txt = txt || "";
+		len = len || txt.length;
+		return (txt + "                                                       ").substring(0, len)
+	}
+	
+	// Returns a string with legible listing of important attributes and their values
+	this.httpEntry = function(entry, sent) {
+		if (!entry) return "";
+		
+		sent = sent || false;
+		var txt = sent ? "--->>>> Request:\n" : "<<<<--- Response:\n";
+	
+		for (var att in entry) {
+			var name = att.getName();
+			var val = att.getValue();
+			if (val && name.indexOf("tcp.") < 0 
+				&& typeof val != "object" && typeof val !=  "com.ibm.di.entry.Attribute" 
+				&& !(val instanceof Array) && !val.startsWith("[B@")) {
+				txt += "  " + this.LJ(name + ": ", 25) + val + "\n"
+			}
+		}
+		
+		return txt
+	}
+}]]></parameter>
+    </Script>
+</MetamergeConfig>

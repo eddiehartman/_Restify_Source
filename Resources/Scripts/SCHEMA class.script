@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="175" UUID="c4ae9f7f-b29f-40f6-b3f2-cabfe304ad48" created="Wed Dec 04 15:06:03 CET 2024" createdBy="eddiehartman" main="SCHEMA class" modified="Thu Jan 30 12:44:27 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="SCHEMA class">
+        <ModTime>1738237376516</ModTime>
+        <parameter name="enabled">true</parameter>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[// 20250121 1145 Change parseOpenAPIschema so the argument openApiSchema can be either JSON or JS object
+// 20250128 1552 Updated replaceEmbeddedUID() to accept either an Entry or a string value as the criteria argument
+// 20250129 1645 Fixing getChildren so it works (again) - stumbled on "parameters"
+
+function SCHEMA(schema, format) {
+	_WHERE = "SCHEMA class";	/* Global variable available for error reporting */
+	this.name = "SCHEMA";
+	this.schemaObj = {};
+	
+	/* Main init logic after method definitions
+
+       The name says it all. Returns a JS Obj */
+       
+    this.parseOpenAPIschema = function(openApiSchema) {
+    	if (typeof(openApiSchema) != "string") return openApiSchema;
+    	
+        openApiSchema = openApiSchema.trim();
+        var jsonString = "";
+
+        /* Load Jackson libraries */
+        var ObjectMapper = com.fasterxml.jackson.databind.ObjectMapper;
+        var objectMapper = new ObjectMapper();
+
+		if (openApiSchema.startsWith("{") && openApiSchema.endsWith("}")) {
+			// overriding above arguments - for now
+			this.format = "JSON"
+		} else {
+			this.format = "YAML"
+		}
+
+        /* Check if YAML and if so, convert to Json */
+        if ("YAML".equalsIgnoreCase(this.format)) {
+            /* Use SnakeYAML to convert the YAML to a map that the ObjectMapper can read */
+            var Yaml = Packages.org.yaml.snakeyaml.Yaml;
+            /* Create instances of Yaml and ObjectMapper */
+            var yaml = new Yaml();
+            /* Parse YAML into a Java Map */
+            var map = yaml.load(openApiSchema);
+
+            /* Convert Java Map to JSON string */
+            jsonString = objectMapper.writeValueAsString(map)
+        } else {
+            jsonString = openApiSchema;
+        }
+
+        this.schemaObj = fromJson(jsonString);
+        return this.schemaObj
+    }
+
+	/*
+		Parses the path and returns the name of the embedded UID attribute in the URL
+	*/
+	this.getEmbeddedUID = function(path) {
+		var parts = system.splitString(path, "/");
+		
+		for (var i = 0; i < parts.length; i++) {
+			var part = parts[i].trim();
+			if (part.startsWith("{") && part.endsWith("}")) {
+				// Found an embedded uid
+				return part.substring(1, part.length-1)
+			}
+		}
+		return null
+	}
+
+	/*
+		Replaces the uid placeholder in the URL path with the uid value passed
+ 		The criteria argument is either an Entry or a string value
+	*/
+	this.replaceEmbeddedUID = function(path, criteria) {
+		var parts = system.splitString(path, "/");
+		var newPath = [parts[0]];
+		
+		for (var i = 1; i < parts.length; i++) {
+			var part = parts[i].trim();
+			if (part.startsWith("{") && part.endsWith("}")) {
+				// Found an embedded uid
+				var embeddedUID = part.substring(1, part.length-1);
+				
+				// If criteria is an Entry then grab the attribute value, else use the parameter value itself
+				var uidValue = (criteria instanceof com.ibm.di.entry.Entry) ? entry[embeddedUID] : criteria;
+				
+				if (!uidValue) {
+					throw new java.lang.Exception("UID attribute not mapped out or is null: " + embeddedUID)
+				}	
+				newPath.push(uidValue)
+			} else {
+				newPath.push(part)
+			}
+		}
+		return newPath.join("/")
+	}
+	
+	/*
+		Uses .getChildren() to return the parameters array for the chosen path and action.
+	*/
+	this.getParameters = function(path, action) {
+		var params = this.getChildren(["paths", path, action, "parameters"])
+		return params
+	}
+	
+    /* Returns the child elements (JS Obj) of the specified path
+       Root level if no argument or blank text passed. Always return a JS object
+    */
+    this.getChildren = function(path) { 
+        //var children = {};
+        var subtree;
+        
+        if (!path) {
+        	path = []
+        }
+        else 
+        if (!(path instanceof Array)) {
+        	path = [path]	
+        }
+        
+        subtree = this.schemaObj[path[0]];
+        for (var i = 1; i < path.length && subtree; i++) {
+        	if (!subtree[path[i]]) { // This could be an array, so lets look for where we can find path[i]
+        		if (subtree instanceof Array) {
+	        		for (var j = 0; j < subtree.length; j++) {
+	        			if (subtree[j][path[i]]) {
+	        				subtree = subtree[j][path[i]];
+	        				break
+	        			}
+	        		}
+        		}
+        		
+        		// subtree does not exist
+        		subtree = {}; // return empty
+        	} else {
+        		subtree = subtree[path[i]]
+        	}
+        }
+
+        return subtree;
+    }
+    
+    /* Main init logic */
+    this.schemaArg = schema;
+    this.format = format || "YAML";
+    this.schemaObj = this.parseOpenAPIschema(schema)
+}]]></parameter>
+    </Script>
+</MetamergeConfig>

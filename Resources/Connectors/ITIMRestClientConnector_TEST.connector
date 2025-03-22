@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="11" UUID="f6f4dfe4-8f1f-4a90-b8d5-f370703b30bf" created="Wed Feb 19 15:09:51 CET 2025" createdBy="eddiehartman" main="ITIMRestClientConnector_TEST" modified="Wed Feb 19 15:56:43 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Connector name="ITIMRestClientConnector_TEST">
+        <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+        <ModTime>1739976996145</ModTime>
+        <ConnectorMode>Lookup</ConnectorMode>
+        <ConnectorState>Enabled</ConnectorState>
+        <Configuration>
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739976996145</ModTime>
+            <parameter name="action">get</parameter>
+            <parameter encrypted="true" name="apikey">o9dPpgfp4XKiQqkIDx2fhmZfBPPl+50yP7Brwy5zPocT937FdnOrQiFqPK9pJWb32ixYXsJfS3nU69qdW69fMyD7zoFun2cwwfNQlWvWik1oaQg3onpNuDb9L6Q8x3YyN+vDMHMQVyeethW03IZRIfaVKbQQd5AfMxxz+tow+0U=</parameter>
+            <parameter name="authUrl">/v1.0/endpoint/default/token</parameter>
+            <parameter name="parameters"/>
+            <parameter encrypted="true" name="password">OwruRDs1DgVodekyasjQUV2vOWk8tQU0FdfXVQ4tg/jnizabkxGLxT0N2NEJ8ZlBRW2cL7+6KyI7t0A34NCdaMKkoW8nlzZOMbErs/xM8QuOQ+HrLt3YQjZfHT8gF1BiYxA54O8V6Qk/koh7ZtNuU138GeUD3Pl3c73ZZNLDgQU=</parameter>
+            <parameter name="path">/people/{personId}</parameter>
+            <parameter name="schema">/schema</parameter>
+            <parameter name="searchCrit">NO12345</parameter>
+            <parameter name="url">http://localhost:8080</parameter>
+            <parameter name="username">edbird</parameter>
+        </Configuration>
+        <Parser>
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </Parser>
+        <AttributeMap name="Input">
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </AttributeMap>
+        <AttributeMap name="Output">
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </AttributeMap>
+        <DeltaSettings/>
+        <Schema name="Input">
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </Schema>
+        <Schema name="Output">
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </Schema>
+        <LinkCriteria>
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </LinkCriteria>
+        <Hooks>
+            <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739974184611</ModTime>
+        </Hooks>
+        <CheckpointConfig/>
+        <SandboxConfig/>
+        <Reconnect>
+            <InheritFrom>[parent]</InheritFrom>
+            <ReconnectRules/>
+        </Reconnect>
+        <Operations/>
+        <PoolDefinition>
+            <InheritFrom>[parent]</InheritFrom>
+        </PoolDefinition>
+        <PoolInstance/>
+    </Connector>
+</MetamergeConfig>

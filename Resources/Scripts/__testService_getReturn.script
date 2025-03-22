@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="30372f8b-fde1-482c-b024-4b117dcf8e19" created="Fri Jan 03 20:35:32 CET 2025" createdBy="eddiehartman" main=".__testService_getReturn.script" modified="Mon Jan 20 20:39:39 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name=".__testService_getReturn.script">
+        <ModTime>1735932935073</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[[
+  {
+    "_embedded": {
+      "erservice": {
+        "_links": {
+          "statusDetails": {
+            "href": "/itim/rest/services/ZXJnbG9iYWxpZD0wMDAwMDAwMDAwMDAwMDAwMDAwMixvdT1zZXJ2aWNlcyxlcmdsb2JhbGlkPTAwMDAwMDAwMDAwMDAwMDAwMDAwLG91PW9yZyxkYz1jb20/statusdetails",
+            "title": "statusDetails"
+          },
+          "self": {
+            "href": "/itim/rest/services/ZXJnbG9iYWxpZD0wMDAwMDAwMDAwMDAwMDAwMDAwMixvdT1zZXJ2aWNlcyxlcmdsb2JhbGlkPTAwMDAwMDAwMDAwMDAwMDAwMDAwLG91PW9yZyxkYz1jb20",
+            "title": "ITIM Service"
+          }
+        },
+        "_attributes": {
+          "erservicename": "ITIM Service"
+        }
+      }
+    },
+    "_links": {
+      "self": {
+        "href": "/itim/rest/accounts/ZXJ1aWQ9YXNtaXRoLG91PXN5c3RlbVVzZXIsb3U9aXRpbSxvdT1vcmcsZGM9Y29t",
+        "title": "asmith"
+      }
+    },
+    "_attributes": {
+      "eruid": "asmith"
+    }
+  }
+]]]></parameter>
+    </Script>
+</MetamergeConfig>

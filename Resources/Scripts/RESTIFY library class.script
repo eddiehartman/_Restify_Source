@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="16" UUID="d9a411b1-7ae7-42b0-b913-d27b8e97bdb4" created="Wed Nov 27 13:32:12 CET 2024" createdBy="eddiehartman" main="RESTIFY library class" modified="Thu Jan 16 12:21:50 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="RESTIFY library class">
+        <ModTime>1737026508610</ModTime>
+        <parameter name="includeFiles"/>
+        <parameter name="script"><![CDATA[// 20241127 2024 Created
+
+// Restify script library class
+
+function RESTIFY () {
+	this.loadFileToByteArray = function(filepath) {
+		var file = new java.io.File(filepath);
+		var fis = new java.io.FileInputStream(file);
+		var bytes = java.util.Arrays.copyOf("".getBytes(), file.length());
+		fis.read(bytes); //read file into bytes[]
+		fis.close();
+		return bytes;
+	}
+	
+	this.loadFileToString = function(filepath) {
+		var sb = new java.lang.StringBuilder();
+		var file = system.openFileForInput(filepath);
+		var line;
+		while ((line = file.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		return sb.toString();
+	}
+	
+	this.loadFileToArray = function(filepath, delimiter) {
+		delimiter = delimiter || "\n";
+		
+		var sb = new java.lang.StringBuilder();
+		var file = system.openFileForInput(filepath);
+		var line;
+		while ((line = file.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		var str = sb.toString();
+		return system.splitString(str, delimiter)
+	}
+	
+	this.getCertificate = function(url) {
+		try {
+			var msg = com.ibm.di.security.GetSSLCertificate.installCertificateFrom(url, 443);
+		} finally {}
+	}
+}]]></parameter>
+    </Script>
+</MetamergeConfig>
