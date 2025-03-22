@@ -2,3 +2,5 @@
 *.bak
 Runtime-_Restify/
 .rs.xml
+.rs.xml
+/Runtime-_Restify
