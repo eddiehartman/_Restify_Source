@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1326" UUID="92c8f7bd-0f0c-45e8-bab3-22bb0925a5b4" created="Sun Dec 01 20:24:38 CET 2024" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Sat Mar 22 14:42:57 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1327" UUID="92c8f7bd-0f0c-45e8-bab3-22bb0925a5b4" created="Sun Dec 01 20:24:38 CET 2024" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Tue Mar 25 11:46:59 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Connector name="ITIMRestClientConnector">
         <InheritFrom>system:/Connectors/ibmdi.ScriptConnector</InheritFrom>
-        <ModTime>1742650975089</ModTime>
+        <ModTime>1742899619525</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1742650975089</ModTime>
-            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="808" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Sat Mar 22 14:37:24 CET 2025" modifiedBy="eddiehartman" version="7.1.1">
+            <ModTime>1742899619525</ModTime>
+            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="809" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Tue Mar 25 11:46:59 CET 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Form name="Form">
-        <ModTime>1742563224992</ModTime>
+        <ModTime>1742899619091</ModTime>
         <FormItemNames>
             <ListItem>$GLOBAL.script</ListItem>
             <ListItem>keepGlobalState</ListItem>
@@ -314,7 +314,7 @@ function fetchSchema() {
 //	var schemaJSON = __lib.loadFileToString("_Restify/itim_swagger.json");
 	var schemaJSON = __http.makeRequest({
 			verb: "GET",
-			url: "/schema",
+			url: form.getControl("schema").getText(),
 			authUrl: form.getControl("authUrl").getText(),
 			ctype: "application/json",
 			where: "fetchSchema()"		
@@ -508,7 +508,7 @@ function write(fname, str) {
             <parameter name="Operation">servers</parameter>
             <parameter name="PathToObjects">paths</parameter>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">YGaC3j0Qnm9gGNeMpcWDpKfZfUJVNJg4MhwEomvay96ij4MzmHhubReLjFWQBO7r3Z0oaHw00Xu5mhQfhrpuMQ6BqGYyhA1zKkbLuwwrabn0kl5w4Q7XgPIIe5MBWnxzY0WsG4b+7viGXA3u+qOFs+vSS9KH9muPG9rDfg5vpnE=</parameter>
+            <parameter encrypted="true" name="apikey">CgJEE02yPj/p4Id5dzLUxrN+qNJ5GYRREB0sugFo1YFWN0GJQs5xNxgbaq271nJPPoachJUawduM8dDOga0Yrc4j7dSJLbpPutiSm1fxqgI9DoFRD37jm2TDACjM3rP+xA6fB6gaJNrB/dMvnI6eDCZ/bTAN7IEi0BIVkzCSgpo=</parameter>
             <parameter name="authUrl">/itim/j_security_check</parameter>
             <parameter name="debug">false</parameter>
             <parameter name="includeFiles"/>
@@ -518,7 +518,7 @@ RESTCLIENT class]]></parameter>
             <parameter name="item">/people</parameter>
             <parameter name="parameters"><![CDATA[
 ]]></parameter>
-            <parameter encrypted="true" name="password">LKjmikTzaQxHcIpJnciG8GhWKZOKCRMAlPejytoVQi+wHzSPJgn2aqpZWkHvmO4Cvk/pqd/In+Mzp++uHCONyEqr1G6GuN4meb//4ceZLKxzI/kmvAyudeX3E4WkzcTfR+osEJsXvX1sBzg7OhzXGArULN6mlDsaeRG9A9OAwlQ=</parameter>
+            <parameter encrypted="true" name="password">coT4K80P/CQ38QceGWAUI87Xxsa6YjLGy02fFOS3XjD5dKKzHE/nK+ekDxbi3eg827TsXvF0ryAapSrAPTLlLjmmWrcXGTxutMEbl8/dIHH9C1D9g2dsFVqX63ejij5I4UE9tWjwDAcxzE1/MXcF4CNCYk/PywRp9RfbZ4qcxrU=</parameter>
             <parameter name="path">/people/{personId}</parameter>
             <parameter name="queryMode">Data</parameter>
             <parameter name="schema">/schema</parameter>
