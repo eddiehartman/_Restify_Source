@@ -6,3 +6,4 @@ Runtime-_Restify/
 /Runtime-_Restify
 .rs.xml
 Runtime-_Restify/_Restify.xml
+*.autosave
