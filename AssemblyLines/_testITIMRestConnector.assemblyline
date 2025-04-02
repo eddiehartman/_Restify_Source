@@ -1,7 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="44" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Sat Mar 22 14:34:34 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="45" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Container name="References"/>
     <AssemblyLine name="_testITIMRestConnector">
-        <ModTime>1742650474003</ModTime>
-        <Settings/>
+        <ModTime>1743617163635</ModTime>
+        <Settings>
+            <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
+            <parameter name="automapattributes">false</parameter>
+            <parameter name="createTombstones">false</parameter>
+            <parameter name="includeGlobalPrologs">true</parameter>
+            <parameter name="includePrologs"><![CDATA[RESTCLIENT class
+SCHEMA class]]></parameter>
+            <parameter name="nullBehaviorDialog">showNullBehavior</parameter>
+        </Settings>
         <Hooks/>
         <CheckpointConfig/>
         <SandboxConfig/>
@@ -19,24 +28,19 @@
         </SimulationConfig>
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer">
-            <ModTime>1742650474003</ModTime>
             <Connector name="ITIMRestClientConnector_iterate">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1742650474003</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598227360</ModTime>
                 <ConnectorMode>Iterator</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742650474003</ModTime>
-                    <parameter name="action">get</parameter>
-                    <parameter name="path">/people/{personId}</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969103037</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -47,7 +51,7 @@
                     <InheritFrom>[parent]</InheritFrom>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969096670</ModTime>
+                    <UniqueAttribute/>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -63,7 +67,6 @@
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739972552928</ModTime>
                     <Hook name="after_getnext">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_getnext</Name>
@@ -90,10 +93,9 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1739985589063</ModTime>
             <Connector name="ITIMRestClientConnector_add">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739972574321</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598085312</ModTime>
                 <ConnectorMode>AddOnly</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -107,7 +109,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739972574321</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -121,7 +122,6 @@ task.logmsg("---- After GetNext: " + conn);
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969182653</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -137,7 +137,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969326372</ModTime>
                     <Hook name="addonly_ok">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>addonly_ok</Name>
@@ -158,8 +157,8 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_delete">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739969394506</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598074593</ModTime>
                 <ConnectorMode>Delete</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -170,7 +169,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969350633</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -181,7 +179,6 @@ task.logmsg("---- After GetNext: " + conn);
                     <InheritFrom>[parent]</InheritFrom>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969332275</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -194,17 +191,15 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969367873</ModTime>
                     <LinkCriteriaItem>
                         <Key>1951e416282</Key>
                         <Attribute>personId</Attribute>
                         <Operator>equals</Operator>
-                        <Value>NO12345</Value>
+                        <Value>itim manager</Value>
                     </LinkCriteriaItem>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969394506</ModTime>
                     <Hook name="after_delete">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_delete</Name>
@@ -225,8 +220,8 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_lookup">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739969457947</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598064765</ModTime>
                 <ConnectorMode>Lookup</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -237,7 +232,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969420495</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -248,7 +242,6 @@ task.logmsg("---- After GetNext: " + conn);
                     <InheritFrom>[parent]</InheritFrom>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969402131</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -261,13 +254,11 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969437607</ModTime>
                     <AdvancedLinkMode>true</AdvancedLinkMode>
-                    <Script>"NO12345"</Script>
+                    <Script>"itim manager"</Script>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969457947</ModTime>
                     <Hook name="after_lookup">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_lookup</Name>
@@ -288,8 +279,8 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_update_add">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739985464645</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598057687</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -303,7 +294,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969505026</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -315,12 +305,11 @@ task.logmsg("---- After GetNext: " + conn);
                         <Enabled>true</Enabled>
                         <Add>true</Add>
                         <Modify>true</Modify>
-                        <Script>"NO12345"</Script>
+                        <Script>"itim manager"</Script>
                         <Simple>personId</Simple>
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969463702</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -333,17 +322,15 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969496594</ModTime>
                     <LinkCriteriaItem>
                         <Key>1951e434bee</Key>
                         <Attribute>personId</Attribute>
                         <Operator>equals</Operator>
-                        <Value>DOESNOTEXIST_FORCE_AND_ADD</Value>
+                        <Value>itim manager</Value>
                     </LinkCriteriaItem>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739985464645</ModTime>
                     <Hook name="after_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_add</Name>
@@ -388,8 +375,8 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_update_modify_fails">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739985531993</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598048453</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -400,7 +387,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969572590</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -409,7 +395,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739973776141</ModTime>
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
@@ -418,7 +403,6 @@ task.logmsg("---- After GetNext: " + conn);
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969557630</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -431,17 +415,15 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739973797581</ModTime>
                     <LinkCriteriaItem>
                         <Key>1951e850c0a</Key>
                         <Attribute>personId</Attribute>
                         <Operator>equals</Operator>
-                        <Value>NO12345</Value>
+                        <Value>itim manager</Value>
                     </LinkCriteriaItem>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739985531993</ModTime>
                     <Hook name="after_modify">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_modify</Name>
@@ -474,8 +456,8 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_callReply">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1739985589063</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598032453</ModTime>
                 <ConnectorMode>CallReply</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -486,11 +468,9 @@ task.logmsg("---- After GetNext: " + conn);
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969793083</ModTime>
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739985589063</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -499,12 +479,11 @@ task.logmsg("---- After GetNext: " + conn);
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
-                        <Script>"NO12345"</Script>
+                        <Script>"itim manager"</Script>
                         <Simple>personId</Simple>
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739969639969</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -520,7 +499,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739969765106</ModTime>
                     <Hook name="after_reply">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_reply</Name>

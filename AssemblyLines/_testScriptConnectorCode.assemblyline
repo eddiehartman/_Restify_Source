@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1127" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode" modified="Tue Feb 18 16:01:02 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1128" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Container name="References"/>
     
 
 
+
 <AssemblyLine name="_testScriptConnectorCode">
-        <ModTime>1739890833962</ModTime>
+        <ModTime>1743617163830</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -38,7 +39,6 @@ RESTCLIENT class
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer"/>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1739890833962</ModTime>
             <Script name="SpoofLib">
                 <ModTime>1739287846076</ModTime>
                 <parameter name="script"><![CDATA[function spoofing(args) {
@@ -988,7 +988,6 @@ function querySchema() {
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739557167569</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -997,7 +996,6 @@ function querySchema() {
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739557409347</ModTime>
                     <AttributeMapItem>
                         <Name>mail</Name>
                         <Type>advanced</Type>
@@ -1030,7 +1028,6 @@ function querySchema() {
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1739555641947</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -1043,7 +1040,6 @@ function querySchema() {
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739890824304</ModTime>
                     <AdvancedLinkMode>true</AdvancedLinkMode>
                     <Script>'NO12345'</Script>
                     <LinkCriteriaItem>
@@ -1327,7 +1323,6 @@ function write(fname, str) {
                 <ModTime>1739216094137</ModTime>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739215969894</ModTime>
                     <AttributeMapItem>
                         <Name>parameters</Name>
                         <Type>substitution</Type>

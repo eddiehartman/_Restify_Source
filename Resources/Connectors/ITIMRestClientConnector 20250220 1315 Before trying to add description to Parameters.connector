@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="53c43738-831a-4ba9-9186-e8e2a242f5d1" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Wed Apr 02 20:12:09 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <Connector name="ITIMRestClientConnector">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="570785cb-2b0b-43f5-bdcc-3ed6d7ba462c" created="Wed Apr 02 20:06:05 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector 20250220 1315 Before trying to add description to Parameters" modified="Wed Apr 02 20:06:05 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Connector name="ITIMRestClientConnector 20250220 1315 Before trying to add description to Parameters">
         <InheritFrom>system:/Connectors/ibmdi.ScriptConnector</InheritFrom>
-        <ModTime>1743617527430</ModTime>
+        <ModTime>1743617165624</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
+            <UserComment><![CDATA[attributes=name,rank,serialnumber
+security=max]]></UserComment>
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1743617527430</ModTime>
-            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="809" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Tue Mar 25 11:46:21 CET 2025" modifiedBy="Administrator" version="7.1.1">
+            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="798" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Wed Feb 19 18:03:41 CET 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Form name="Form">
-        <ModTime>1742899573577</ModTime>
+        <ModTime>1739984619621</ModTime>
         <FormItemNames>
             <ListItem>$GLOBAL.script</ListItem>
             <ListItem>keepGlobalState</ListItem>
@@ -206,9 +207,9 @@
             <parameter name="label">Search for ID</parameter>
         </FormItem>
         <FormItem name="url">
-            <ModTime>1742563224992</ModTime>
-            <parameter name="description">The first part of the URL, http://&lt;domain&gt;:&lt;port&gt;, with colon and port number, which is not required if the port is 80</parameter>
-            <parameter name="label">REST Host</parameter>
+            <ModTime>1737024046822</ModTime>
+            <parameter name="description">The first part of the URL, http://&lt;domain&gt;:&lt;port&gt;, with colon and port number required only if not port 80</parameter>
+            <parameter name="label">Base URL</parameter>
         </FormItem>
         <FormItem name="username">
             <ModTime>1736017120599</ModTime>
@@ -250,7 +251,6 @@
 // 20250121 2103 Form Working! Now to look at Mode ops (putEntry, findEntry, ...)
 // 20250128 1608 Hardened the fetchActions and fetchItems so it checks for schema first
 // 20250219 1802 Finished Fetch for parameters in Connections tab
-// 20250220 1321 Added some description to Parameters when fetched
 //
 //						GLOBAL VARIABLES
 //
@@ -314,7 +314,7 @@ function fetchSchema() {
 //	var schemaJSON = __lib.loadFileToString("_Restify/itim_swagger.json");
 	var schemaJSON = __http.makeRequest({
 			verb: "GET",
-			url: form.getControl("schema").getText(),
+			url: "/schema",
 			authUrl: form.getControl("authUrl").getText(),
 			ctype: "application/json",
 			where: "fetchSchema()"		
@@ -388,8 +388,7 @@ function updateTextBox(controlName, paramsArray) {
 		//alert("Found " + i + " " + param.name + ": " + param.description);
 		if (param["in"] != "path") {
 			// Add to the list if not something for the path itself
-			useParams[param.name] = system.splitString(param.description, ".")[0]
-									+ (system.splitString(param.description, ".")[1]);	
+			useParams[param.name] = "";	
 		}
 	}
 	
@@ -508,20 +507,23 @@ function write(fname, str) {
             <parameter name="Operation">servers</parameter>
             <parameter name="PathToObjects">paths</parameter>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">F12HIi3Vfi3s59hhprUqO+gJdTHA468dJ69imQDGHB0+pIYenTtWeGSkXIIeJ+n2cGvepAvXDn7FfJy8FFDJgb78SNB1ZQNqCOi6I7RMLGbFrjiYffLbHKER3NoXdmPjFCtsiIBdDcyhA56LkUI6n9PrI/1oaKwf7hLULPbTG4U=</parameter>
-            <parameter name="authUrl">/itim/j_security_check</parameter>
+            <parameter encrypted="true" name="apikey">JgLHl5V7qYoyJKhIXvYl0r2oFsZlWzvKpAiTa6aQQSzX2V3uS36xqjkkCcK6Lj2ZG5cZMR7J7cYkafzhE+3lJlu5Cu7PxmukSEXM7K3GsAUQyAkbHHDL2lEnnIUdC7XepK5E0PZX2jYTzmljJOBgO8AXYRYNK8Eo+q3A8DfPJNU=</parameter>
+            <parameter name="authUrl">/v1.0/endpoint/default/token</parameter>
             <parameter name="debug">false</parameter>
             <parameter name="includeFiles"/>
             <parameter name="includePrologs"><![CDATA[SCHEMA class
 RESTCLIENT class]]></parameter>
             <parameter name="includeUIDs">true</parameter>
             <parameter name="item">/people</parameter>
-            <parameter name="parameters"><![CDATA[
+            <parameter name="parameters"><![CDATA[attributes=name,rank,serialnumber
+embedded=
+forms=
+security=max
 ]]></parameter>
-            <parameter encrypted="true" name="password">NKapmfr5iIPYeNAZqkoncdt0FOP8/0goGAxte5TSHJ7WcIsRtSGjkakDFCyrYCnrRXjPOLP0PYW3KBlkcbHqMEkcHZ1vVar+XoY8clHySlkpbdtDebdRg4MOvTefjt+etfmtrloKbBPIicH4KYN3JZlV1D36cFmsDw0cMROj9tU=</parameter>
+            <parameter encrypted="true" name="password">QnMGGP76c9Mbq4T/IkEMMHLXYbfwa1yCGcWqxd52j/LmV9oNCVEA+GCjDSq1wjZC2lMHUr8DA+3Xm0Lm9w1HNLopoErlG3cvHrP8//axPz/doGn9RYsQS5kyR3kd/kWmGp8fENY7KCnitgmEHKpG5Ilm/13bKRXqL3xNAdCGKFw=</parameter>
             <parameter name="path">/people/{personId}</parameter>
             <parameter name="queryMode">Data</parameter>
-            <parameter name="schema">/openapi</parameter>
+            <parameter name="schema">/schema</parameter>
             <parameter name="script"><![CDATA[// 20250104 2008 Initial
 // 20250111 1915 Handling queryParameters in url
 // 20250126 1901 Adding queryMode for querySchema to return either params, or schema of data
@@ -546,7 +548,6 @@ RESTCLIENT class]]></parameter>
 // 20250214 1924 all Connector functions in place
 // 20250219 1419 Removing Query Schema Mode 
 // 20250219 2023 All connector modes supported except modify
-// 20250402 1423 Added __contextRoot global param - @@TODO: Should be a parameter
 //
 // --- TODO Freetext parameter where all the standard set of parameter values can be set
 //                                        
@@ -562,7 +563,6 @@ var __http = null; 							// for the RESTCLIENT we will use for the calls
 var __resultSet = null;						// A container for returned entries (selectEntries/findEntry)
 var __resultSetIndex = 0;					// Index into the result set
 var __formEventCalling = false;
-var __contextRoot = "/itim/rest";
 
 var __paramNames = {
 	action: true,
@@ -897,7 +897,7 @@ function queryReply() {
 		// Make the REST call @@TODO Only does GET for now
 		var reply = __http.makeRequest({
 				verb: "GET", // @@TODO Must figure out how to set the HTTP verb based on the schema
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "queryReply()"
 		});
@@ -968,7 +968,7 @@ function selectEntries(queryMode) {
 			// Make the REST call @@TODO Only does GET for now
 			var reply = __http.makeRequest({
 					verb: "GET", // @@TODO Must figure out how to set the HTTP verb based on the schema
-					url: usePath + __contextRoot + queryString,
+					url: usePath + queryString,
 					ctype: "application/json",
 					where: "queryReply()"
 			});
@@ -1044,7 +1044,7 @@ function putEntry(entryArg) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "POST",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "putEntry()",
 				body: entry.toJSON()
@@ -1100,7 +1100,7 @@ function deleteEntry(entryArg) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "DELETE",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "putEntry()",
 				body: entry.toJSON()
@@ -1185,7 +1185,7 @@ function findEntry(searchCriteria) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "GET",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "findEntry()"
 		});
@@ -1269,9 +1269,9 @@ function querySchema(queryMode) {
 	result.setStatus(1);
 	return list
 }]]></parameter>
-            <parameter name="searchCrit">me</parameter>
-            <parameter name="url">https://192.168.2.39:30943</parameter>
-            <parameter name="username">itim manager</parameter>
+            <parameter name="searchCrit">NO12345</parameter>
+            <parameter name="url">http://localhost:8080</parameter>
+            <parameter name="username">edbird</parameter>
         </Configuration>
         <Parser>
             <InheritFrom>[parent]</InheritFrom>

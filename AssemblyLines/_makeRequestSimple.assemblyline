@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="1da0de27-aea1-4bf3-8c7d-18efff265f24" created="Fri Mar 21 21:04:48 CET 2025" createdBy="eddiehartman" main="_makeRequestSimple" modified="Fri Mar 21 21:08:16 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="4" UUID="1da0de27-aea1-4bf3-8c7d-18efff265f24" created="Fri Mar 21 21:04:48 CET 2025" createdBy="eddiehartman" main="_makeRequestSimple" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <AssemblyLine name="_makeRequestSimple">
-        <ModTime>1742587695109</ModTime>
+        <ModTime>1743617163056</ModTime>
         <Settings/>
         <Hooks/>
         <CheckpointConfig/>
@@ -15,7 +15,6 @@
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer"/>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1742587695109</ModTime>
             <Connector name="http">
                 <InheritFrom>system:/Connectors/ibmdi.HTTPClient</InheritFrom>
                 <ModTime>1742587575228</ModTime>
@@ -23,37 +22,29 @@
                 <ConnectorState>Passive</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587539724</ModTime>
                     <parameter name="url">http://localhost:8080</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </AttributeMap>
                 <DeltaSettings/>
                 <Schema name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </Schema>
                 <Schema name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1742587512799</ModTime>
                 </Hooks>
                 <CheckpointConfig/>
                 <SandboxConfig/>

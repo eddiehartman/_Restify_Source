@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="743" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode" modified="Tue Jan 28 15:50:47 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <AssemblyLine name="_testScriptConnectorCode">
-        <ModTime>1738075847388</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="744" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode 20250128 1503 selectEntries and getNextEntry implemented" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Container name="References"/>
+    <AssemblyLine name="_testScriptConnectorCode 20250128 1503 selectEntries and getNextEntry implemented">
+        <ModTime>1743617163284</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -30,7 +31,6 @@ RESTCLIENT class
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer"/>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1738075847388</ModTime>
             <Script name="SpoofLib">
                 <ModTime>1738073114381</ModTime>
                 <parameter name="script"><![CDATA[function control(val) {
@@ -886,7 +886,6 @@ function write(fname, str) {
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1737982106197</ModTime>
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
@@ -898,7 +897,6 @@ function write(fname, str) {
                     <InheritFrom>[parent]</InheritFrom>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1737982073881</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
@@ -908,7 +906,6 @@ function write(fname, str) {
                 </Schema>
                 <Schema name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1737997172378</ModTime>
                     <SchemaItem>
                         <Name>CSRFToken</Name>
                         <NativeSyntax>MUST/string</NativeSyntax>

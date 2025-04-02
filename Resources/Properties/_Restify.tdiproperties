@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="30f37f71-c53f-49ee-a543-c20436451db7" created="Wed Apr 02 19:57:55 CEST 2025" createdBy="eddiehartman" main="_Restify" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Container name="_Restify">
+        <Container name="Data"/>
+        <Properties name="Config">
+            <Stores>
+                <PropertyStore name="_Restify">
+                    <Parser/>
+                    <RawConnector>
+                        <InheritFrom>system:/Connectors/ibmdi.Properties</InheritFrom>
+                        <parameter name="collection">@SUBSTITUTE{config.$directory}/_Restify.properties</parameter>
+                        <parameter name="collectionType">_Restify</parameter>
+                    </RawConnector>
+                    <Key>key</Key>
+                    <Value>value</Value>
+                    <ReadOnly>false</ReadOnly>
+                    <InitialLoad>true</InitialLoad>
+                    <CacheTimeout>0</CacheTimeout>
+                </PropertyStore>
+            </Stores>
+        </Properties>
+    </Container>
+</MetamergeConfig>

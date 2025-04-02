@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="115" UUID="7926819b-1976-4757-aff7-12bdaf7afe1b" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class" modified="Tue Mar 25 11:48:03 CET 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="78777381-ccba-4e27-8f8a-f4c5bab4270a" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="RESTCLIENT class" modified="Wed Apr 02 20:08:04 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Script name="RESTCLIENT class">
-        <ModTime>1742899683418</ModTime>
+        <ModTime>1743617281620</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// 20250116 1116 Created
 // 20250121 1146 Finishing (I hope) the creation of this Class - vrs.0.9
@@ -12,6 +12,8 @@
 // 20250319 1452 Franz and I made some changes to makeRequest(), adding support for redirection
 // 20250321 2041 Still working on it
 // 20250322 1443 Working now! Added Franz's code, plus made cookie handling better
+// 20250402 1345 Added "accept" arg to makeRequest method, else default is 'application/json'
+// 20250402 1429 Added handling of Redirect for makeRequest method
 //
 // This is the class that provides methods for making HTTP requests
 //
@@ -98,6 +100,7 @@ function RESTCLIENT(args) {
 		var ctype = params.ctype || "application/json";
 		var where = params.where || "";
 		var headers = params.headers || {};
+		var accept = params.accept || "application/json";
 		var gettingToken = params.token || false;
 		var username = params.username || "";
 		var password = params.password || "";
@@ -142,10 +145,9 @@ function RESTCLIENT(args) {
 		this.requestEntry["http.Content-Type"] = ctype;
 		this.requestEntry["http.remote_user"] = username;
 		this.requestEntry["http.remote_password"] = password;
-		
-		this.requestEntry["http.Accept"] = "application/json"; // @@TODO Is this necessary?
+		this.requestEntry["http.Accept"] = accept;
 		this.requestEntry["http.Connection"] = "keep-alive";
-		
+				
 		for (var hdr in headers) {
 			this.requestEntry["http." + hdr] = headers[hdr]
 		}
@@ -187,7 +189,13 @@ function RESTCLIENT(args) {
 					this.CSRFToken = retEntry.getString("http.CSRFToken");
 				}	
 				
-				// Now to decide what to return, based on the returnValue argument passed in
+				var retCode = retEntry.getString("http.responseCode");
+				
+				if (retCode.startsWith("3")) {
+					this.requestEntry("http.url") = retEntry.getString("http.location");
+					retry = true
+				} else
+				// Else decide what to return, based on the returnValue argument passed in and continue processing this request
 				if (returnValue == "cookie") {
 					reply = retEntry
 				} else
@@ -196,6 +204,7 @@ function RESTCLIENT(args) {
 				} else {
 					reply = retEntry
 				}	
+				
 			} catch (ex) {
 				//if (form && this.debug) this.alert("Exception: " + ex);
 				
@@ -215,7 +224,7 @@ function RESTCLIENT(args) {
 				} else
 				// If a redirect - follow the redirect
 				if (retEntry && retEntry.getString("http.responseCode").startsWith("3")) {
-					requestEntry["http.url"] = retEntry.getString("http.Location")
+					this.requestEntry["http.url"] = retEntry.getString("http.Location");
  					retry = true;
 				} else {
 					throw ex;

@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="39f077ae-f91f-4188-ba84-d4589e0ded85" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="ISVG_LCR_TEST" modified="Thu Mar 20 14:51:24 CET 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="39f077ae-f91f-4188-ba84-d4589e0ded85" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="ISVG_LCR_TEST" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+    <Container name="References"/>
     <AssemblyLine name="ISVG_LCR_TEST">
-        <ModTime>1742478684589</ModTime>
+        <ModTime>1743617163441</ModTime>
         <Settings/>
         <Hooks/>
         <CheckpointConfig/>
@@ -21,7 +22,7 @@
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
                     <parameter name="action">GET</parameter>
-                    <parameter encrypted="true" name="password">HAdUAugba67Q5mtIKVcENaZ1r1Fb9/6TG/TLUVjf7taGIKd8oXOX5xhdTELpCHlxhEgSP3jClvewPBZgpXwWNntIZU61YLqNoZNnQWyz6TQ2+fyrpa2vgKin/rIvC6gtU6lmk1l4WaeESHeaPDSRTu9c+c2Cp5v8hpQYHE2NrWU=</parameter>
+                    <parameter encrypted="true" name="password">Y6j0KQg1Ddac/w6j4QJYOTpa0iR7QxBp+BdtUvNScc2n2bkPqrNhSD3rhry46nmm24XHojZ8O2xbyVPvuq04P7WSAZIz8Uh89/RcO5Txv2kGWWRsET/FQebNFmdbAA91nzTDu424HWlazMMythIgipmw5AbdmZf50dVQk61Lc8g=</parameter>
                     <parameter name="path">/lifecyclerule</parameter>
                     <parameter name="url">https://192.168.2.39:30943/openapi/ui/#</parameter>
                     <parameter name="username">itim manager</parameter>

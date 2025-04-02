@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="6310e846-ba8f-4323-b89b-4be185c20399" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class 20250318" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
-    <Script name="RESTCLIENT class 20250318">
-        <ModTime>1743617163122</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="1d38cb2a-4b83-4bd6-96c4-efaca3f0d8c2" created="Wed Apr 02 19:57:55 CEST 2025" createdBy="eddiehartman" main="RESTCLIENT class 20250321 1941 Still working on it" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="RESTCLIENT class 20250321 1941 Still working on it">
+        <ModTime>1743617163187</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// 20250116 1116 Created
 // 20250121 1146 Finishing (I hope) the creation of this Class - vrs.0.9
@@ -9,6 +9,8 @@
 // 20250128 2122 Fixing httpEntry() so it does not fail on argument = null
 // 20250130 1243 Making sure this class works both inside and outside a Connector
 // 20250131 1942 Made this.logmsg() write to both System.out and main.logmsg
+// 20250319 1452 Franz and I made some changes to makeRequest(), adding support for redirection
+// 20250321 2041 Still working on it
 
 // This is the class that provides methods for making HTTP requests
 
@@ -53,6 +55,52 @@ function RESTCLIENT(args) {
 		main.logmsg(lvl, msg);
 		java.lang.System.out.println(((lvl == "INFO") ? "" : lvl) + msg)
 	}
+	
+	// Get the authentication token. Argument token tells makeRequest not to getToken, and skip parsing the body and instead return http.Set-Cookie
+	this.getToken = function() {
+		this.cookies = []; // empty out cookies
+		
+		// First get session id
+		this.sessionId = this.makeRequest({
+				token: true, // Getting a token
+				verb: "POST",
+				url: this.authUrl,
+				where: "getToken()"
+		});
+		
+		// Now for the LTPAToken2
+		this.token = this.makeRequest({
+				token: true, // Getting a token
+				verb: "POST",
+				url: "/itim/j_security_check", // @@TODO Should make this a parameter under Connections
+				ctype: "application/x-www-form-urlencoded",
+				where: "getToken()",
+				headers: {
+					Authorization: "Bearer " + this.apikey
+				},
+				body: "j_username=" + this.username + "&j_password=" + this.password
+		});
+		
+		// Get CSRFToken
+		var reply = this.makeRequest({
+				token: true,
+				verb: "GET",
+				url: "/itim/rest/systemusers/me", // @@TODO Should make this a parameter under Connections
+				ctype: "application/json",
+				where: "getToken()",
+				cookies: this.sessionId + "\n" + this.token
+		});
+		this.csrfToken = reply
+	}
+	
+	// Fix the cookies string for makeRequest()
+	this.setCookies = function() {
+		var cookies = system.splitString("", ""); // Start with an empty Java array
+		if (this.sessionId) cookies.push(this.sessionId);
+		if (this.sessionId) cookies.push(this.sessionId);
+		if (this.sessionId) cookies.push(this.sessionId)
+		this.cookies = cookies
+	}	
 
 	// REST Client http-call method. The first lines of code show you the parameters you can send in the 'param' JS object
 	this.makeRequest = function(params) {
@@ -81,14 +129,14 @@ function RESTCLIENT(args) {
 		// Empty out the requestEntry before setting it up for the call
 		this.requestEntry.removeAllAttributes();
 		
-		// Add auth artifacts
-		if (!gettingToken) {
-			this.requestEntry["http.X-CSRV-TOKEN"] = this.token;
-			if (this.sessionId) this.requestEntry["http.sessionId"] = this.sessionId;
-		}
+		// Add cookies
+		this.addCookies(this.requestEntry);
 		
 		// Prepend the host (baseURL) if not already there
 		if (url.toLowerCase().indexOf(this.baseUrl.toLowerCase()) < 0) {
+			if (this.baseUrl.endsWith("/")) {
+				this.baseUrl = this.baseUrl.substring(0, this.baseUrl.length-1) // remove / at end of baseUrl if found
+			}	
 			url = this.baseUrl + url;
 		}
 		
@@ -139,7 +187,7 @@ function RESTCLIENT(args) {
 		this.http.initialize(null);
 	
 		alreadyImportedCert = false; 
-	
+		var reply = null;
 		// Make the call
 		do {
 			var retry = false;
@@ -148,7 +196,15 @@ function RESTCLIENT(args) {
 				
 				var retEntry = this.http.queryReply(this.requestEntry);
 
-				var reply = this.parseReply(retEntry);
+				if (getCookie) {
+					reply = retEntry.getString("http.Set-Cookie")
+				} else {
+					reply = this.parseReply(retEntry);
+				}
+				
+				// Grab the CSRFToken if found
+				if (retEntry.getString("http.CSRFToken")) this.CSRFToken = httpReply.getString("http.CSRFToken")
+				
 			} catch (ex) {
 				//if (form && this.debug) this.alert("Exception: " + ex);
 				
@@ -165,6 +221,11 @@ function RESTCLIENT(args) {
 					this.getCertificate();
 					alreadyImportedCert = true;
 					retry = true;
+				} else
+				// If a redirect - follow the redirect
+				if (retEntry.getString("http.responseCode").startsWith("3")) {
+					requestEntry["http.url"] = retEntry.getString("http.Location")
+ 					retry = true;
 				} else {
 					throw ex;
 				}	
@@ -210,8 +271,7 @@ function RESTCLIENT(args) {
 		this.logmsg("! Result: " + msg)
 	}
 	
-	// Get the authentication token
-	this.getToken = function() {
+	this.getToken_OLD = function() {
 		var reply = this.makeRequest({
 				token: true, // Getting a token
 				verb: "POST",
@@ -230,7 +290,7 @@ function RESTCLIENT(args) {
 		this.token = reply.csrftoken || "";
 		this.sessionId = reply.sessionId || ""
 	}
-
+	
 	this.logDetails = function(params, sent) {
 		sent = sent || false;
 		var msg = params.msg;

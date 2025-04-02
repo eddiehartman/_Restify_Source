@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="186" UUID="fa25cca4-cfbe-4efb-b319-d12cfe00182b" created="Thu Jan 16 11:15:42 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class" modified="Mon Jan 27 18:56:08 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <Script name="RESTCLIENT class">
-        <ModTime>1738000566987</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="187" UUID="fa25cca4-cfbe-4efb-b319-d12cfe00182b" created="Thu Jan 16 11:15:42 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class 20250127 1858 Working. Now selectEntries plus" modified="Wed Apr 02 20:06:05 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="RESTCLIENT class 20250127 1858 Working. Now selectEntries plus">
+        <ModTime>1743617165667</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// 20250116 1116 Created
 // 20250121 1146 Finishing (I hope) the creation of this Class - vrs.0.9

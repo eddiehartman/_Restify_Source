@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="152" UUID="c4ae9f7f-b29f-40f6-b3f2-cabfe304ad48" created="Wed Dec 04 15:06:03 CET 2024" createdBy="eddiehartman" main="SCHEMA class" modified="Mon Jan 27 18:50:09 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <Script name="SCHEMA class">
-        <ModTime>1738000209197</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="153" UUID="c4ae9f7f-b29f-40f6-b3f2-cabfe304ad48" created="Wed Dec 04 15:06:03 CET 2024" createdBy="eddiehartman" main="SCHEMA class 20250127 1858 Working. Now selectEntries plus" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="SCHEMA class 20250127 1858 Working. Now selectEntries plus">
+        <ModTime>1743617163497</ModTime>
         <parameter name="enabled">true</parameter>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// 20250121 1145 Change parseOpenAPIschema so the argument openApiSchema can be either JSON or JS object

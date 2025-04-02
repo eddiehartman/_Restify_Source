@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1040" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode" modified="Wed Feb 12 12:22:52 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <AssemblyLine name="_testScriptConnectorCode">
-        <ModTime>1739359371814</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1041" UUID="5ce199ef-895c-40ee-9fc2-5cb8ee523bba" created="Wed Dec 11 22:20:03 CET 2024" createdBy="eddiehartman" main="_testScriptConnectorCode 20250212 1224 putEntry() working" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Container name="References"/>
+    <AssemblyLine name="_testScriptConnectorCode 20250212 1224 putEntry() working">
+        <ModTime>1743617163731</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -34,7 +35,6 @@ RESTCLIENT class
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer"/>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1739359371814</ModTime>
             <Script name="SpoofLib">
                 <ModTime>1739287846076</ModTime>
                 <parameter name="script"><![CDATA[function spoofing(args) {
@@ -1146,7 +1146,6 @@ function write(fname, str) {
                 <ConnectorState>Disabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739292133836</ModTime>
                     <parameter name="queryMode">Data</parameter>
                 </Configuration>
                 <Parser>
@@ -1154,7 +1153,6 @@ function write(fname, str) {
                 </Parser>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1738951570943</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -1163,7 +1161,6 @@ function write(fname, str) {
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1738951543770</ModTime>
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
@@ -1172,14 +1169,12 @@ function write(fname, str) {
                     </AttributeMapItem>
                 </AttributeMap>
                 <DeltaSettings>
-                    <ModTime>1738950998940</ModTime>
                     <WhenToCommit>After every database operation</WhenToCommit>
                     <RowLocking>SERIALIZABLE</RowLocking>
                     <ChangeDetectionMode>DETECT_ALL</ChangeDetectionMode>
                 </DeltaSettings>
                 <Schema name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739292124443</ModTime>
                     <SchemaItem>
                         <Name>attributes</Name>
                         <Syntax>java.lang.String</Syntax>
@@ -1203,7 +1198,6 @@ function write(fname, str) {
                 </Schema>
                 <Schema name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739292124443</ModTime>
                     <SchemaItem>
                         <Name>attributes</Name>
                         <Syntax>java.lang.String</Syntax>
@@ -1255,7 +1249,6 @@ task.dumpEntry(work);
                 <ModTime>1739216094137</ModTime>
                 <AttributeMap name="Input">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1739215969894</ModTime>
                     <AttributeMapItem>
                         <Name>parameters</Name>
                         <Type>substitution</Type>

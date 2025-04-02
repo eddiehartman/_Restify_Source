@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="2" UUID="6310e846-ba8f-4323-b89b-4be185c20399" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class 20250318" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
-    <Script name="RESTCLIENT class 20250318">
-        <ModTime>1743617163122</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="128" UUID="7926819b-1976-4757-aff7-12bdaf7afe1b" created="Thu Mar 20 14:51:24 CET 2025" createdBy="eddiehartman" main="RESTCLIENT class" modified="Wed Apr 02 14:29:43 CEST 2025" modifiedBy="eddiehartman" project="_Restify_From_Franz" version="7.1.1">
+    <Script name="RESTCLIENT class">
+        <ModTime>1743596983530</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[// 20250116 1116 Created
 // 20250121 1146 Finishing (I hope) the creation of this Class - vrs.0.9
@@ -9,8 +9,16 @@
 // 20250128 2122 Fixing httpEntry() so it does not fail on argument = null
 // 20250130 1243 Making sure this class works both inside and outside a Connector
 // 20250131 1942 Made this.logmsg() write to both System.out and main.logmsg
-
+// 20250319 1452 Franz and I made some changes to makeRequest(), adding support for redirection
+// 20250321 2041 Still working on it
+// 20250322 1443 Working now! Added Franz's code, plus made cookie handling better
+// 20250402 1345 Added "accept" arg to makeRequest method, else default is 'application/json'
+// 20250402 1429 Added handling of Redirect for makeRequest method
+//
 // This is the class that provides methods for making HTTP requests
+//
+// NOTES:
+//			* It uses its own this.logmsg() for more control over logging
 
 function RESTCLIENT(args) {
 	this.baseUrl = (args.baseUrl || "").trim();
@@ -19,6 +27,7 @@ function RESTCLIENT(args) {
 	this.username = args.username || ""; 
 	this.password = args.password || "";
 	this.debug = true //args.debug || false;
+	this.cookieArrayList = new java.util.ArrayList();
 	
 	// The HTTP Client Connector to use
 	this.http = system.getConnector("ibmdi.HTTPClient");
@@ -29,31 +38,52 @@ function RESTCLIENT(args) {
 	this.token = null;
 	this.sessionId = null;
 	
-	// Own logmsg() to aid in debugging
-	this.logmsg = function(lvl, msg) {
-		if (!lvl) { // undefined, and allows just a call to this.logmsg() to log a carriage return
-			lvl = "INFO";
-			msg = ""
-		} else
-		if (!msg) {
-			msg = lvl;
-			lvl = "INFO"
-		}
+	// Get the authentication token. Argument token tells makeRequest not to getToken, and skip parsing the body and instead return http.Set-Cookie
+	this.getToken = function() {
+		this.cookies = ""; // empty out cookies
+		this.cookieArrayList.clear();
 		
-		if ("DEBUG".equalsIgnoreCase(lvl)) {
-			// Write to console out also
-			java.lang.System.out.println("|" + this.LJ(lvl,5) + "| " + msg);
-		}
+		// First get session id
+		this.sessionId = this.makeRequest({
+				token: true, // Getting a token
+				returnValue: "cookie",
+				verb: "GET",
+				url: "/itim/restlogin/login.jsp", // @@TODO Should make this a parameter under Connections
+				where: "getToken()"
+		});
 		
-		//if (form && this.debug) this.alert("RESTCLIENT.logmsg: " + msg);
-		//this.alert("task: " + (typeof task) + " - " + (task instanceof com.ibm.di.server.AssemblyLine));
+		// Now for the LTPAToken2
+		this.token = this.makeRequest({
+				token: true, // Getting a token
+				returnValue: "cookie",
+				verb: "POST",
+				url: "/itim/j_security_check", // @@TODO Should make this a parameter under Connections
+				ctype: "application/x-www-form-urlencoded",
+				where: "getToken()",
+				headers: {
+					Authorization: "Bearer " + this.apikey
+				},
+				body: "j_username=" + this.username + "&j_password=" + this.password
+		});
 		
-		// This to allow it to be used by Connector Form Event script
-		//if (task && task instanceof com.ibm.di.server.AssemblyLine) 	task.logmsg(lvl, msg)
-		main.logmsg(lvl, msg);
-		java.lang.System.out.println(((lvl == "INFO") ? "" : lvl) + msg)
+		// Get CSRFToken
+		var reply = this.makeRequest({
+				token: true, // Getting a token - or at least part of the process
+				returnValue: "entry",
+				verb: "GET",
+				url: "/itim/rest/systemusers/me", // @@TODO Should make this a parameter under Connections
+				ctype: "application/json",
+				where: "getToken()",
+				cookies: this.sessionId + "\n" + this.token
+		});
+		this.CSRFToken = reply.getString("http.CSRFToken")
 	}
-
+	
+	// Get the currently set Cookies
+	this.getCookies = function() {
+		return this.cookieArrayList.toArray().join("; ")
+	}	
+	
 	// REST Client http-call method. The first lines of code show you the parameters you can send in the 'param' JS object
 	this.makeRequest = function(params) {
 		// Get token if necessary
@@ -69,10 +99,13 @@ function RESTCLIENT(args) {
 		var body = params.body || null;
 		var ctype = params.ctype || "application/json";
 		var where = params.where || "";
+		var accept = params.accept || "application/json";
 		var headers = params.headers || {};
 		var gettingToken = params.token || false;
 		var username = params.username || "";
 		var password = params.password || "";
+		
+		var returnValue = params.returnValue || "JS object";
 		
 		var alreadyImportedCert = false;
 		
@@ -81,14 +114,11 @@ function RESTCLIENT(args) {
 		// Empty out the requestEntry before setting it up for the call
 		this.requestEntry.removeAllAttributes();
 		
-		// Add auth artifacts
-		if (!gettingToken) {
-			this.requestEntry["http.X-CSRV-TOKEN"] = this.token;
-			if (this.sessionId) this.requestEntry["http.sessionId"] = this.sessionId;
-		}
-		
 		// Prepend the host (baseURL) if not already there
 		if (url.toLowerCase().indexOf(this.baseUrl.toLowerCase()) < 0) {
+			if (this.baseUrl.endsWith("/")) {
+				this.baseUrl = this.baseUrl.substring(0, this.baseUrl.length-1) // remove / at end of baseUrl if found
+			}	
 			url = this.baseUrl + url;
 		}
 		
@@ -115,10 +145,8 @@ function RESTCLIENT(args) {
 		this.requestEntry["http.Content-Type"] = ctype;
 		this.requestEntry["http.remote_user"] = username;
 		this.requestEntry["http.remote_password"] = password;
-		
-		this.requestEntry["http.Accept"] = "application/json";
+		this.requestEntry["http.Accept"] = accept;
 		this.requestEntry["http.Connection"] = "keep-alive";
-		
 		
 		for (var hdr in headers) {
 			this.requestEntry["http." + hdr] = headers[hdr]
@@ -139,16 +167,43 @@ function RESTCLIENT(args) {
 		this.http.initialize(null);
 	
 		alreadyImportedCert = false; 
-	
+		var reply = null;
 		// Make the call
 		do {
 			var retry = false;
 			try {	
 				this.alert("\nMaking call:" + this.requestEntry + "\n");
 				
+				// Set cookies
+				this.requestEntry["http.Cookie"] = this.getCookies(); // In case these have been changed since last time
+		
 				var retEntry = this.http.queryReply(this.requestEntry);
 
-				var reply = this.parseReply(retEntry);
+				// Grab any cookies if found
+				if (retEntry["http.Set-Cookie"]) {
+					this.cookieArrayList.add(retEntry.getString("http.Set-Cookie"));
+				}
+
+				// Grab the CSRFToken if found
+				if (retEntry.getString("http.CSRFToken")) {
+					this.CSRFToken = retEntry.getString("http.CSRFToken");
+				}
+				
+				var retCode = retEntry.getString("http.responseCode");
+				
+				if (retCode.startsWith("3")) {
+					this.requestEntry("http.url") = retEntry.getString("http.location");
+					retry = true
+				} else
+				// Else decide what to return, based on the returnValue argument passed in and continue processing this request
+				if (returnValue == "cookie") {
+					reply = retEntry
+				} else
+				if (returnValue == "JS object") {
+					reply = this.parseReply(retEntry);
+				} else {
+					reply = retEntry
+				}	
 			} catch (ex) {
 				//if (form && this.debug) this.alert("Exception: " + ex);
 				
@@ -165,6 +220,11 @@ function RESTCLIENT(args) {
 					this.getCertificate();
 					alreadyImportedCert = true;
 					retry = true;
+				} else
+				// If a redirect - follow the redirect
+				if (retEntry && retEntry.getString("http.responseCode").startsWith("3")) {
+					this.requestEntry["http.url"] = retEntry.getString("http.Location")
+ 					retry = true;
 				} else {
 					throw ex;
 				}	
@@ -210,8 +270,7 @@ function RESTCLIENT(args) {
 		this.logmsg("! Result: " + msg)
 	}
 	
-	// Get the authentication token
-	this.getToken = function() {
+	this.getToken_OLD = function() {
 		var reply = this.makeRequest({
 				token: true, // Getting a token
 				verb: "POST",
@@ -230,7 +289,8 @@ function RESTCLIENT(args) {
 		this.token = reply.csrftoken || "";
 		this.sessionId = reply.sessionId || ""
 	}
-
+	
+	// Log specifics arguments passed to makeRequest()
 	this.logDetails = function(params, sent) {
 		sent = sent || false;
 		var msg = params.msg;
@@ -331,6 +391,31 @@ function RESTCLIENT(args) {
 		
 		return txt
 	}
+
+	// Own logmsg() to aid in debugging
+	this.logmsg = function(lvl, msg) {
+		if (!lvl) { // undefined, and allows just a call to this.logmsg() to log a carriage return
+			lvl = "INFO";
+			msg = ""
+		} else
+		if (!msg) {
+			msg = lvl;
+			lvl = "INFO"
+		}
+		
+		if ("DEBUG".equalsIgnoreCase(lvl)) {
+			// Write to console out also
+			java.lang.System.out.println("|" + this.LJ(lvl,5) + "| " + msg);
+		}
+		
+		//if (form && this.debug) this.alert("RESTCLIENT.logmsg: " + msg);
+		//this.alert("task: " + (typeof task) + " - " + (task instanceof com.ibm.di.server.AssemblyLine));
+		
+		// This to allow it to be used by Connector Form Event script
+		//if (task && task instanceof com.ibm.di.server.AssemblyLine) 	task.logmsg(lvl, msg)
+		main.logmsg(lvl, msg);
+		java.lang.System.out.println(((lvl == "INFO") ? "" : lvl) + msg)
+	}	
 }]]></parameter>
     </Script>
 </MetamergeConfig>

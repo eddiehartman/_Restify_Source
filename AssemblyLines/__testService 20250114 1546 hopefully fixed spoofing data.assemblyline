@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="87" UUID="8554a4c8-34fd-4c49-97fe-4a8808811c6d" created="Mon Dec 30 19:09:06 CET 2024" createdBy="eddiehartman" main="__testService" modified="Mon Jan 13 20:47:23 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <AssemblyLine name="__testService">
-        <ModTime>1736797642804</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="88" UUID="8554a4c8-34fd-4c49-97fe-4a8808811c6d" created="Mon Dec 30 19:09:06 CET 2024" createdBy="eddiehartman" main="__testService 20250114 1546 hopefully fixed spoofing data" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <AssemblyLine name="__testService 20250114 1546 hopefully fixed spoofing data">
+        <ModTime>1743617163531</ModTime>
         <Settings/>
         <Hooks/>
         <CheckpointConfig/>
@@ -15,7 +15,6 @@
         </SimulationConfig>
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer">
-            <ModTime>1736797108027</ModTime>
             <Connector name="HTTPServerConnector">
                 <InheritFrom>system:/Connectors/ibmdi.HTTPServer</InheritFrom>
                 <ModTime>1736797108027</ModTime>
@@ -38,7 +37,6 @@
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1735931738303</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -57,10 +55,8 @@
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1736797108027</ModTime>
                     <Hook name="before_reply">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1736797108027</ModTime>
                         <Name>before_reply</Name>
                         <Script><![CDATA[task.logmsg(">>> Making response: \n" + conn.toJSON());
 
@@ -94,7 +90,6 @@ if (!statusCode) {
             </Connector>
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1736797642804</ModTime>
             <Script name="Script lib">
                 <ModTime>1736797642804</ModTime>
                 <parameter name="script"><![CDATA[var authReturn = {

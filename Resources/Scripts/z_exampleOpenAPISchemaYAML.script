@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="a79998ac-6868-4201-bc02-758cb7baa59f" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="exampleOpenAPISchemaYAML" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <Script name="exampleOpenAPISchemaYAML">
-        <ModTime>1743617163077</ModTime>
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="6" UUID="1735cd1d-171a-4c3d-98e6-6dc28d908055" created="Sun Nov 17 15:58:30 CET 2024" createdBy="eddiehartman" main="exampleOpenAPISchema" modified="Sun Nov 17 16:07:09 CET 2024" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Script name="exampleOpenAPISchema">
+        <ModTime>1731855960889</ModTime>
         <parameter name="includeFiles"/>
         <parameter name="script"><![CDATA[openapi: "3.0.0"
 info:

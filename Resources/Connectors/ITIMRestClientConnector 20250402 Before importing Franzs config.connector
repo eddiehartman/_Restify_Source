@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="3" UUID="53c43738-831a-4ba9-9186-e8e2a242f5d1" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Wed Apr 02 20:12:09 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1327" UUID="92c8f7bd-0f0c-45e8-bab3-22bb0925a5b4" created="Sun Dec 01 20:24:38 CET 2024" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Tue Mar 25 11:46:59 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Connector name="ITIMRestClientConnector">
         <InheritFrom>system:/Connectors/ibmdi.ScriptConnector</InheritFrom>
-        <ModTime>1743617527430</ModTime>
+        <ModTime>1742899619525</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1743617527430</ModTime>
-            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="809" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Tue Mar 25 11:46:21 CET 2025" modifiedBy="Administrator" version="7.1.1">
+            <ModTime>1742899619525</ModTime>
+            <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="809" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Tue Mar 25 11:46:59 CET 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Form name="Form">
-        <ModTime>1742899573577</ModTime>
+        <ModTime>1742899619091</ModTime>
         <FormItemNames>
             <ListItem>$GLOBAL.script</ListItem>
             <ListItem>keepGlobalState</ListItem>
@@ -508,7 +508,7 @@ function write(fname, str) {
             <parameter name="Operation">servers</parameter>
             <parameter name="PathToObjects">paths</parameter>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">F12HIi3Vfi3s59hhprUqO+gJdTHA468dJ69imQDGHB0+pIYenTtWeGSkXIIeJ+n2cGvepAvXDn7FfJy8FFDJgb78SNB1ZQNqCOi6I7RMLGbFrjiYffLbHKER3NoXdmPjFCtsiIBdDcyhA56LkUI6n9PrI/1oaKwf7hLULPbTG4U=</parameter>
+            <parameter encrypted="true" name="apikey">CgJEE02yPj/p4Id5dzLUxrN+qNJ5GYRREB0sugFo1YFWN0GJQs5xNxgbaq271nJPPoachJUawduM8dDOga0Yrc4j7dSJLbpPutiSm1fxqgI9DoFRD37jm2TDACjM3rP+xA6fB6gaJNrB/dMvnI6eDCZ/bTAN7IEi0BIVkzCSgpo=</parameter>
             <parameter name="authUrl">/itim/j_security_check</parameter>
             <parameter name="debug">false</parameter>
             <parameter name="includeFiles"/>
@@ -518,10 +518,10 @@ RESTCLIENT class]]></parameter>
             <parameter name="item">/people</parameter>
             <parameter name="parameters"><![CDATA[
 ]]></parameter>
-            <parameter encrypted="true" name="password">NKapmfr5iIPYeNAZqkoncdt0FOP8/0goGAxte5TSHJ7WcIsRtSGjkakDFCyrYCnrRXjPOLP0PYW3KBlkcbHqMEkcHZ1vVar+XoY8clHySlkpbdtDebdRg4MOvTefjt+etfmtrloKbBPIicH4KYN3JZlV1D36cFmsDw0cMROj9tU=</parameter>
+            <parameter encrypted="true" name="password">coT4K80P/CQ38QceGWAUI87Xxsa6YjLGy02fFOS3XjD5dKKzHE/nK+ekDxbi3eg827TsXvF0ryAapSrAPTLlLjmmWrcXGTxutMEbl8/dIHH9C1D9g2dsFVqX63ejij5I4UE9tWjwDAcxzE1/MXcF4CNCYk/PywRp9RfbZ4qcxrU=</parameter>
             <parameter name="path">/people/{personId}</parameter>
             <parameter name="queryMode">Data</parameter>
-            <parameter name="schema">/openapi</parameter>
+            <parameter name="schema">/schema</parameter>
             <parameter name="script"><![CDATA[// 20250104 2008 Initial
 // 20250111 1915 Handling queryParameters in url
 // 20250126 1901 Adding queryMode for querySchema to return either params, or schema of data
@@ -546,7 +546,6 @@ RESTCLIENT class]]></parameter>
 // 20250214 1924 all Connector functions in place
 // 20250219 1419 Removing Query Schema Mode 
 // 20250219 2023 All connector modes supported except modify
-// 20250402 1423 Added __contextRoot global param - @@TODO: Should be a parameter
 //
 // --- TODO Freetext parameter where all the standard set of parameter values can be set
 //                                        
@@ -562,7 +561,6 @@ var __http = null; 							// for the RESTCLIENT we will use for the calls
 var __resultSet = null;						// A container for returned entries (selectEntries/findEntry)
 var __resultSetIndex = 0;					// Index into the result set
 var __formEventCalling = false;
-var __contextRoot = "/itim/rest";
 
 var __paramNames = {
 	action: true,
@@ -897,7 +895,7 @@ function queryReply() {
 		// Make the REST call @@TODO Only does GET for now
 		var reply = __http.makeRequest({
 				verb: "GET", // @@TODO Must figure out how to set the HTTP verb based on the schema
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "queryReply()"
 		});
@@ -968,7 +966,7 @@ function selectEntries(queryMode) {
 			// Make the REST call @@TODO Only does GET for now
 			var reply = __http.makeRequest({
 					verb: "GET", // @@TODO Must figure out how to set the HTTP verb based on the schema
-					url: usePath + __contextRoot + queryString,
+					url: usePath + queryString,
 					ctype: "application/json",
 					where: "queryReply()"
 			});
@@ -1044,7 +1042,7 @@ function putEntry(entryArg) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "POST",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "putEntry()",
 				body: entry.toJSON()
@@ -1100,7 +1098,7 @@ function deleteEntry(entryArg) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "DELETE",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "putEntry()",
 				body: entry.toJSON()
@@ -1185,7 +1183,7 @@ function findEntry(searchCriteria) {
 		// Make the REST call 
 		var reply = __http.makeRequest({
 				verb: "GET",
-				url: usePath + __contextRoot + queryString,
+				url: usePath + queryString,
 				ctype: "application/json",
 				where: "findEntry()"
 		});
@@ -1269,9 +1267,9 @@ function querySchema(queryMode) {
 	result.setStatus(1);
 	return list
 }]]></parameter>
-            <parameter name="searchCrit">me</parameter>
-            <parameter name="url">https://192.168.2.39:30943</parameter>
-            <parameter name="username">itim manager</parameter>
+            <parameter name="searchCrit">NO12345</parameter>
+            <parameter name="url">http://localhost:8080</parameter>
+            <parameter name="username">edbird</parameter>
         </Configuration>
         <Parser>
             <InheritFrom>[parent]</InheritFrom>
@@ -1290,9 +1288,11 @@ function querySchema(queryMode) {
         </DeltaSettings>
         <Schema name="Input">
             <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739555301141</ModTime>
         </Schema>
         <Schema name="Output">
             <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1739287790828</ModTime>
             <SchemaItem>
                 <Name>CSRFToken</Name>
                 <Syntax>java.lang.String</Syntax>

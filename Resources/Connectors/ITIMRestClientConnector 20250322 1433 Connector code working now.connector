@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1323" UUID="92c8f7bd-0f0c-45e8-bab3-22bb0925a5b4" created="Sun Dec 01 20:24:38 CET 2024" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Fri Mar 21 21:14:36 CET 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
-    <Connector name="ITIMRestClientConnector">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1324" UUID="92c8f7bd-0f0c-45e8-bab3-22bb0925a5b4" created="Sun Dec 01 20:24:38 CET 2024" createdBy="eddiehartman" main="ITIMRestClientConnector 20250322 1433 Connector code working now" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+    <Connector name="ITIMRestClientConnector 20250322 1433 Connector code working now">
         <InheritFrom>system:/Connectors/ibmdi.ScriptConnector</InheritFrom>
-        <ModTime>1742588076383</ModTime>
+        <ModTime>1743617163148</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
             <UserComment><![CDATA[attributes=name,rank,serialnumber
 security=max]]></UserComment>
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1742588076383</ModTime>
             <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="807" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Fri Mar 21 21:14:36 CET 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Form name="Form">
         <ModTime>1742563224992</ModTime>
@@ -510,7 +509,7 @@ function write(fname, str) {
             <parameter name="Operation">servers</parameter>
             <parameter name="PathToObjects">paths</parameter>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">Y2IJ5TLAQI0pGSaKgv1SJqGfEty5+ITHFeVgGxLXz2CJQmuDlVUt5rrf/ks/Po26C8r1dsAG+jpdJmtVk88/kZjd1DBGN0EK5BIqLjcnMCSbgkDB97CzUlMt4wvrOPW5w1TibGHeGBymc09sTCggCOAwTLYKDdgnI4EZHqXLqGQ=</parameter>
+            <parameter encrypted="true" name="apikey">FrGUs/XI0lmCEWpNF355e71jq1BzXarcSLNYxTAuJebCoObZFBs7QmvRUqJrcuLEoV5Bl3VzOIFUq4X2h7F6BKXlNIPF1f8Kj6mjnEcOUZBO76FyJJRmPbZhS8cZiShAHNCvYcsfn+ZpoPTt6EtdZbvQx/nvDe8UFcE7GHJMoWE=</parameter>
             <parameter name="authUrl">/itim/j_security_check</parameter>
             <parameter name="debug">false</parameter>
             <parameter name="includeFiles"/>
@@ -523,7 +522,7 @@ embedded=Specifies the comma-separated attributes to return for reference attrib
 forms=Specifies the boolean If true, then the form is returned for the user
 security=max
 ]]></parameter>
-            <parameter encrypted="true" name="password">Rsozud6f8yyqF9GtHYHGSS5nZtPDgrlHKK+kopPARV9Jg2P51bjxY4/DOj7LIaDi7blumZCShGJvrts/EceZDoTlkHywdzcT7sfCBVud0zMfNwHxeGLE3lDnv+kWVZ2aqJqLXxdd238q7g/7eqwtvNaEByNZI0dHWgy4b439uTA=</parameter>
+            <parameter encrypted="true" name="password">mn1EsgWkACizZrFdAGgfClVDcCaZI7GV7hGtdTGoQjt0rUp7X5zVfTCYPgC59MrrLLQCD4oNVYl7uEpzYl1VAY7kx2cJoV584k4q0foh/dAtszn+Ez921EZ25T7rh1bfFiqZIlMnS1zo44mBE2ynmujuPECNj46Jv0Wab+pghNI=</parameter>
             <parameter name="path">/people/{personId}</parameter>
             <parameter name="queryMode">Data</parameter>
             <parameter name="schema">/schema</parameter>
@@ -1293,11 +1292,9 @@ function querySchema(queryMode) {
         </DeltaSettings>
         <Schema name="Input">
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1739555301141</ModTime>
         </Schema>
         <Schema name="Output">
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1739287790828</ModTime>
             <SchemaItem>
                 <Name>CSRFToken</Name>
                 <Syntax>java.lang.String</Syntax>
