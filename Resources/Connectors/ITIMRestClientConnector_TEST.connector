@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="1" UUID="bfb80881-da4b-420c-a2c9-a6d76f5957cf" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector_TEST" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="6" UUID="bfb80881-da4b-420c-a2c9-a6d76f5957cf" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector_TEST" modified="Sat Apr 12 17:41:08 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Connector name="ITIMRestClientConnector_TEST">
         <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
-        <ModTime>1743617163842</ModTime>
+        <ModTime>1744472467957</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
             <InheritFrom>[parent]</InheritFrom>
+            <ModTime>1744472467957</ModTime>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">ZEe82aK7rrohrAHwzoB39dQEcxGndiHy0g6siMKZYoXMs8dKA7PbW/pbqwLH7dEWfbk1R90KeMkwLasy5iuFxDA+AOBIldEezo67QVtgEqW/94MwIAzhvZnKwUC66QrRuJt38v7ji8sSuFNRYxeJZNrr4NQF7II7rUKs87FnxQc=</parameter>
+            <parameter encrypted="true" name="apikey">htq73ya5BkVO78NMQYWJQxtfqLLSQRaTG9fqx7xFM4Jxf/l5WswCJ+Alp4aV1DMUro0n4jZkZp8rABPlbAvMA/bLNJHUGUAjzA+tNLyUABGiQyqrqIT/Mjw/An4376H1W9rjdLbXnytmArBJai20LSAnB5vZY4fi277D1tLuwfc=</parameter>
             <parameter name="authUrl">/v1.0/endpoint/default/token</parameter>
             <parameter name="parameters"/>
-            <parameter encrypted="true" name="password">O9vIqrq0Xj5i15AXEau030/B6oFODQLFQoDEdp+hBwVk0vc+0FpMKSIrX6pJEgP9O6WHwhRZMXsY+7fUX0KE4Dp02Q/8IHfNoxviSWz2XBVZ6ZEK8hAlKtdcNkAJhrQNaKOd0Ba/3nei9kfQ3GekMUJQE1kSYMZPtOajy0fQckI=</parameter>
+            <parameter encrypted="true" name="password">ouJM6T+4Cd4aS0NwwBO44W+jTp3EQckSj65ijryXB+y8GxOFOM0vh28v+YniJc7f5bcSW1YTNL2386KLkCcqU571yPYGeiWpg3mqF7A469+2UCA4wCuAdB9GXE7chKmhJ4LCw6thviuHQGtjhw3avSUVeI0natzyaEIbDh44kvU=</parameter>
             <parameter name="path">/people/{personId}</parameter>
-            <parameter name="schema">/openapi</parameter>
-            <parameter name="searchCrit">SAP ADMIN</parameter>
-            <parameter name="url">https://192.168.2.39:30943</parameter>
-            <parameter name="username">itim manager</parameter>
+            <parameter name="searchCrit">itim manager</parameter>
+            <parameter name="url">http://localhost:8080</parameter>
+            <parameter name="username">edbird</parameter>
         </Configuration>
         <Parser>
             <InheritFrom>[parent]</InheritFrom>

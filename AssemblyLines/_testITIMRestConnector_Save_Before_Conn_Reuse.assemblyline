@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="51" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Sat Apr 12 17:47:24 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="45" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Wed Apr 02 20:06:03 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Container name="References"/>
-    
-
-
-<AssemblyLine name="_testITIMRestConnector">
-        <ModTime>1744472844038</ModTime>
+    <AssemblyLine name="_testITIMRestConnector">
+        <ModTime>1743617163635</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -23,7 +20,7 @@ SCHEMA class]]></parameter>
                 <Component name="ITIMRestClientConnector_delete" state="Simulated"/>
                 <Component name="ITIMRestClientConnector_lookup" state="Enabled"/>
                 <Component name="ITIMRestClientConnector_update_add" state="Simulated"/>
-                <Component name="ITIMRestClientConnector_update_modify_fails_as_not_supported_yet" state="Simulated"/>
+                <Component name="ITIMRestClientConnector_update_modify_fails" state="Simulated"/>
                 <Component name="ITIMRestClientConnector_callReply" state="Enabled"/>
                 <Component name="ITIMRestClientConnector_iterate" state="Enabled"/>
             </SimulationStates>
@@ -32,8 +29,8 @@ SCHEMA class]]></parameter>
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer">
             <Connector name="ITIMRestClientConnector_iterate">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1744377710791</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598227360</ModTime>
                 <ConnectorMode>Iterator</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -96,16 +93,13 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1744472844038</ModTime>
             <Connector name="ITIMRestClientConnector_add">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472142886</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598085312</ModTime>
                 <ConnectorMode>AddOnly</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
@@ -115,7 +109,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472142886</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -124,7 +117,7 @@ task.logmsg("---- After GetNext: " + conn);
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
-                        <Script>"itim manager"</Script>
+                        <Script>"NO12345"</Script>
                         <Simple>personId</Simple>
                     </AttributeMapItem>
                 </AttributeMap>
@@ -164,14 +157,12 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_delete">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377441939</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598074593</ModTime>
                 <ConnectorMode>Delete</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
@@ -229,14 +220,12 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_lookup">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377452465</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598064765</ModTime>
                 <ConnectorMode>Lookup</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
@@ -290,14 +279,12 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_update_add">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472844038</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598057687</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
@@ -344,7 +331,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472844038</ModTime>
                     <Hook name="after_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
                         <Name>after_add</Name>
@@ -352,32 +338,27 @@ task.logmsg("---- After GetNext: " + conn);
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="after_lookup">
-                        <ModTime>1744472067335</ModTime>
                         <Name>after_lookup</Name>
-                        <Enabled>false</Enabled>
+                        <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744472076129</ModTime>
                         <Name>before_add</Name>
                         <Script>task.logmsg("---- update_add After Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_modify">
-                        <ModTime>1744472068413</ModTime>
                         <Name>before_modify</Name>
-                        <Enabled>false</Enabled>
+                        <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_update">
-                        <ModTime>1744472066381</ModTime>
                         <Name>before_update</Name>
-                        <Enabled>false</Enabled>
+                        <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="default_fail">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744472844038</ModTime>
                         <Name>default_fail</Name>
-                        <Script>task.logmsg("!!!! Error: " + error)</Script>
+                        <Script>task.logmsg("!!!! Error: " + ex)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -393,15 +374,13 @@ task.logmsg("---- After GetNext: " + conn);
                 </PoolDefinition>
                 <PoolInstance/>
             </Connector>
-            <Connector name="ITIMRestClientConnector_update_modify_fails_as_not_supported_yet">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472262287</ModTime>
+            <Connector name="ITIMRestClientConnector_update_modify_fails">
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598048453</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
@@ -416,11 +395,10 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472204687</ModTime>
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
-                        <Script>"itim manager"</Script>
+                        <Script>"NO12345"</Script>
                         <Simple>personId</Simple>
                     </AttributeMapItem>
                 </AttributeMap>
@@ -478,14 +456,12 @@ task.logmsg("---- After GetNext: " + conn);
                 <PoolInstance/>
             </Connector>
             <Connector name="ITIMRestClientConnector_callReply">
-                <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377473985</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1743598032453</ModTime>
                 <ConnectorMode>CallReply</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
                     <InheritFrom>[parent]</InheritFrom>
-                    <parameter name="connectorType">@ITIMRestClientConnector_iterate</parameter>
-                    <parameter name="parserOption">Useless</parameter>
                 </Configuration>
                 <Parser>
                     <InheritFrom>[parent]</InheritFrom>
