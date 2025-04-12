@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="51" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Sat Apr 12 17:47:24 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="55" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Sat Apr 12 19:07:23 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Container name="References"/>
     
 
 
+
 <AssemblyLine name="_testITIMRestConnector">
-        <ModTime>1744472844038</ModTime>
+        <ModTime>1744477641443</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -96,10 +97,10 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1744472844038</ModTime>
+            <ModTime>1744477641443</ModTime>
             <Connector name="ITIMRestClientConnector_add">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472142886</ModTime>
+                <ModTime>1744476993899</ModTime>
                 <ConnectorMode>AddOnly</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -144,10 +145,12 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744476993899</ModTime>
                     <Hook name="addonly_ok">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744476993899</ModTime>
                         <Name>addonly_ok</Name>
-                        <Script>task.logmsg("---- Add Successful: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- Add Successful: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -165,7 +168,7 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
             <Connector name="ITIMRestClientConnector_delete">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377441939</ModTime>
+                <ModTime>1744477003912</ModTime>
                 <ConnectorMode>Delete</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -209,10 +212,12 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744477003912</ModTime>
                     <Hook name="after_delete">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477003912</ModTime>
                         <Name>after_delete</Name>
-                        <Script>task.logmsg("---- After Delete: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- After Delete: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -230,7 +235,7 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
             <Connector name="ITIMRestClientConnector_lookup">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377452465</ModTime>
+                <ModTime>1744477009876</ModTime>
                 <ConnectorMode>Lookup</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -270,10 +275,12 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744477009876</ModTime>
                     <Hook name="after_lookup">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477009876</ModTime>
                         <Name>after_lookup</Name>
-                        <Script>task.logmsg("---- After Lookup: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- After Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -291,7 +298,7 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
             <Connector name="ITIMRestClientConnector_update_add">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472844038</ModTime>
+                <ModTime>1744477641443</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -335,49 +342,49 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744477641443</ModTime>
                     <LinkCriteriaItem>
                         <Key>1951e434bee</Key>
                         <Attribute>personId</Attribute>
                         <Operator>equals</Operator>
-                        <Value>itim manager</Value>
+                        <Value>johnny nobody</Value>
                     </LinkCriteriaItem>
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472844038</ModTime>
+                    <ModTime>1744477563671</ModTime>
                     <Hook name="after_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477021952</ModTime>
                         <Name>after_add</Name>
-                        <Script>task.logmsg("---- update_add After Add: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- update_add After Add: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="after_lookup">
-                        <ModTime>1744472067335</ModTime>
+                        <ModTime>1744477512387</ModTime>
                         <Name>after_lookup</Name>
-                        <Enabled>false</Enabled>
+                        <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744472076129</ModTime>
+                        <ModTime>1744477563671</ModTime>
                         <Name>before_add</Name>
-                        <Script>task.logmsg("---- update_add After Lookup: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- update_add After Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_modify">
-                        <ModTime>1744472068413</ModTime>
                         <Name>before_modify</Name>
                         <Enabled>false</Enabled>
                     </Hook>
                     <Hook name="before_update">
-                        <ModTime>1744472066381</ModTime>
                         <Name>before_update</Name>
                         <Enabled>false</Enabled>
                     </Hook>
                     <Hook name="default_fail">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744472844038</ModTime>
+                        <ModTime>1744477029218</ModTime>
                         <Name>default_fail</Name>
-                        <Script>task.logmsg("!!!! Error: " + error)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " !!!! Error: " + error)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -395,7 +402,7 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
             <Connector name="ITIMRestClientConnector_update_modify_fails_as_not_supported_yet">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744472262287</ModTime>
+                <ModTime>1744477051116</ModTime>
                 <ConnectorMode>Update</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -446,22 +453,26 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744477051116</ModTime>
                     <Hook name="after_modify">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477044031</ModTime>
                         <Name>after_modify</Name>
-                        <Script>task.logmsg("---- After Modify: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- After Modify: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_modify">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477037960</ModTime>
                         <Name>before_modify</Name>
-                        <Script>task.logmsg("---- update_modify Before Lookup: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- update_modify Before Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="default_fail">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477051116</ModTime>
                         <Name>default_fail</Name>
-                        <Script>task.logmsg("---- update_add Default On Error: " + error)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- update_add Default On Error: " + error)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
@@ -479,7 +490,7 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
             <Connector name="ITIMRestClientConnector_callReply">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
-                <ModTime>1744377473985</ModTime>
+                <ModTime>1744477137700</ModTime>
                 <ConnectorMode>CallReply</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -523,16 +534,20 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
+                    <ModTime>1744477137700</ModTime>
                     <Hook name="after_reply">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477063753</ModTime>
                         <Name>after_reply</Name>
-                        <Script>task.logmsg("---- After CallReply: " + conn)</Script>
+                        <Script>task.logmsg(thisConnector.getName() + " ---- After CallReply: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_call">
                         <InheritFrom>[no inheritance]</InheritFrom>
+                        <ModTime>1744477137700</ModTime>
                         <Name>before_call</Name>
-                        <Script>conn.merge(saveWork)</Script>
+                        <Script><![CDATA[conn.merge(saveWork);
+task.logmsg(thisConnector.getName() + " ---- Before CallReply: " + conn)]]></Script>
                         <Enabled>true</Enabled>
                     </Hook>
                 </Hooks>
