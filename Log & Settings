@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2024-06-26" created="Wed Apr 02 20:06:02 CEST 2025" createdBy="eddiehartman" modified="Wed Apr 02 20:06:06 CEST 2025" modifiedBy="eddiehartman" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig IDIversion="Created by SDI7.2 - 2024-06-26" created="Wed Apr 02 20:06:02 CEST 2025" createdBy="eddiehartman" modified="Thu Apr 17 18:44:40 CEST 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Folder name="AssemblyLines"/>
     <Folder name="Connectors"/>
     <Folder name="Parsers"/>

@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="55" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Sat Apr 12 19:07:23 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="56" UUID="0e356c0c-f571-4d38-ac0e-e4f7a30e9bc0" created="Wed Feb 19 13:44:34 CET 2025" createdBy="eddiehartman" main="_testITIMRestConnector" modified="Thu Apr 17 18:44:40 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Container name="References"/>
     
 
 
 
+
 <AssemblyLine name="_testITIMRestConnector">
-        <ModTime>1744477641443</ModTime>
+        <ModTime>1744908280243</ModTime>
         <Settings>
             <parameter name="ALPoolSettingsDialog">showALPoolSettings</parameter>
             <parameter name="automapattributes">false</parameter>
@@ -33,8 +34,8 @@ SCHEMA class]]></parameter>
         <LogConfig/>
         <ContainerEF name="EntryFeedContainer">
             <Connector name="ITIMRestClientConnector_iterate">
-                <InheritFrom>/Connectors/ITIMRestClientConnector_TEST</InheritFrom>
-                <ModTime>1744377710791</ModTime>
+                <InheritFrom>/Connectors/ITIMRestClientConnector</InheritFrom>
+                <ModTime>1744806213549</ModTime>
                 <ConnectorMode>Iterator</ConnectorMode>
                 <ConnectorState>Enabled</ConnectorState>
                 <Configuration>
@@ -97,7 +98,6 @@ task.logmsg("---- After GetNext: " + conn);
             </Connector>
         </ContainerEF>
         <ContainerDF name="DataFlowContainer">
-            <ModTime>1744477641443</ModTime>
             <Connector name="ITIMRestClientConnector_add">
                 <InheritFrom>@ITIMRestClientConnector_iterate</InheritFrom>
                 <ModTime>1744476993899</ModTime>
@@ -116,7 +116,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472142886</ModTime>
                     <AttributeMapItem>
                         <Name>*</Name>
                         <Type>simple</Type>
@@ -145,10 +144,8 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744476993899</ModTime>
                     <Hook name="addonly_ok">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744476993899</ModTime>
                         <Name>addonly_ok</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- Add Successful: " + conn)</Script>
                         <Enabled>true</Enabled>
@@ -212,10 +209,8 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477003912</ModTime>
                     <Hook name="after_delete">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477003912</ModTime>
                         <Name>after_delete</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- After Delete: " + conn)</Script>
                         <Enabled>true</Enabled>
@@ -275,10 +270,8 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477009876</ModTime>
                     <Hook name="after_lookup">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477009876</ModTime>
                         <Name>after_lookup</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- After Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
@@ -342,7 +335,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </Schema>
                 <LinkCriteria>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477641443</ModTime>
                     <LinkCriteriaItem>
                         <Key>1951e434bee</Key>
                         <Attribute>personId</Attribute>
@@ -352,22 +344,18 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477563671</ModTime>
                     <Hook name="after_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477021952</ModTime>
                         <Name>after_add</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- update_add After Add: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="after_lookup">
-                        <ModTime>1744477512387</ModTime>
                         <Name>after_lookup</Name>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_add">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477563671</ModTime>
                         <Name>before_add</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- update_add After Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
@@ -382,7 +370,6 @@ task.logmsg("---- After GetNext: " + conn);
                     </Hook>
                     <Hook name="default_fail">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477029218</ModTime>
                         <Name>default_fail</Name>
                         <Script>task.logmsg(thisConnector.getName() + " !!!! Error: " + error)</Script>
                         <Enabled>true</Enabled>
@@ -423,7 +410,6 @@ task.logmsg("---- After GetNext: " + conn);
                 </AttributeMap>
                 <AttributeMap name="Output">
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744472204687</ModTime>
                     <AttributeMapItem>
                         <Name>personId</Name>
                         <Type>advanced</Type>
@@ -453,24 +439,20 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477051116</ModTime>
                     <Hook name="after_modify">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477044031</ModTime>
                         <Name>after_modify</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- After Modify: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_modify">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477037960</ModTime>
                         <Name>before_modify</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- update_modify Before Lookup: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="default_fail">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477051116</ModTime>
                         <Name>default_fail</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- update_add Default On Error: " + error)</Script>
                         <Enabled>true</Enabled>
@@ -534,17 +516,14 @@ task.logmsg("---- After GetNext: " + conn);
                 </LinkCriteria>
                 <Hooks>
                     <InheritFrom>[parent]</InheritFrom>
-                    <ModTime>1744477137700</ModTime>
                     <Hook name="after_reply">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477063753</ModTime>
                         <Name>after_reply</Name>
                         <Script>task.logmsg(thisConnector.getName() + " ---- After CallReply: " + conn)</Script>
                         <Enabled>true</Enabled>
                     </Hook>
                     <Hook name="before_call">
                         <InheritFrom>[no inheritance]</InheritFrom>
-                        <ModTime>1744477137700</ModTime>
                         <Name>before_call</Name>
                         <Script><![CDATA[conn.merge(saveWork);
 task.logmsg(thisConnector.getName() + " ---- Before CallReply: " + conn)]]></Script>

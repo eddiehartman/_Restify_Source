@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="27" UUID="53c43738-831a-4ba9-9186-e8e2a242f5d1" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Sat Apr 12 17:40:56 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
+<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="28" UUID="53c43738-831a-4ba9-9186-e8e2a242f5d1" created="Wed Apr 02 20:06:03 CEST 2025" createdBy="eddiehartman" main="ITIMRestClientConnector" modified="Thu Apr 17 18:44:40 CEST 2025" modifiedBy="eddiehartman" project="_Restify" version="7.1.1">
     <Connector name="ITIMRestClientConnector">
         <InheritFrom>system:/Connectors/ibmdi.ScriptConnector</InheritFrom>
-        <ModTime>1744472456066</ModTime>
+        <ModTime>1744908280008</ModTime>
         <ConnectorMode>Lookup</ConnectorMode>
         <ConnectorState>Enabled</ConnectorState>
         <Configuration>
             <InheritFrom>[parent]</InheritFrom>
-            <ModTime>1744472456066</ModTime>
             <parameter name="$form$"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><MetamergeConfig Cycle="816" UUID="addb9b0b-e0b0-408d-bc18-1e00ff1dbaa6" created="Sun Dec 01 21:11:43 CET 2024" createdBy="eddiehartman" main="Form" modified="Fri Apr 11 16:29:01 CEST 2025" modifiedBy="eddiehartman" version="7.1.1">
     <Form name="Form">
         <ModTime>1744381739943</ModTime>
@@ -516,9 +515,9 @@ function write(fname, str) {
             <parameter name="Operation">servers</parameter>
             <parameter name="PathToObjects">paths</parameter>
             <parameter name="action">get</parameter>
-            <parameter encrypted="true" name="apikey">pbJ60Sno8sMA6m34+Q1UDY+UrICC1lh2u3lqbkUWWokH38QCUGBPJ6rMrv2l1b4s+XIOcYWOQrbGPb1MDipPXr2pXaBNNMNLSJxCyWMToU4dukLKvId3B49lJsj88ro7oFCh0p7p1G63ElA8Dx4YCCO+/iisWeck97Y4dAnphPs=</parameter>
+            <parameter encrypted="true" name="apikey">MwWW0pEIzDbgTwU6nOV/ok8lCIvsiA1zgkQvj148vvON37oRh/rFE5S/OX2SljJan9IQjnLEu7Jpq2yWFeZSTczK0WfZJe1gn588CV5rr0G5iTPIahaM/f5SZDJ3O3BOfwia1opQ+TbFbknlM0vAxNfOp2zHFHsb67pThQhsg+w=</parameter>
             <parameter name="authUrl">/itim/j_security_check</parameter>
-            <parameter name="contextRoot">/itim/api</parameter>
+            <parameter name="contextRoot">/itim/rest</parameter>
             <parameter name="debug">false</parameter>
             <parameter name="includeFiles"/>
             <parameter name="includePrologs"><![CDATA[SCHEMA class
@@ -527,7 +526,7 @@ RESTCLIENT class]]></parameter>
             <parameter name="item">/people</parameter>
             <parameter name="parameters"><![CDATA[
 ]]></parameter>
-            <parameter encrypted="true" name="password">oB31uWHOAl8DqbP23T59lfREiviD+IcOp4yZYMNyT0Opk7MF11RJmstG2XVjODaYBuGo+geKTiYwycZGt7W/ITfldjv1CnYn8nNICpTSg591kvJirZyciHSTTu7YwBpg7Rn2bObnWgXMMPpa8qXr2inYoULyMI8aeuAs9hy0Lq4=</parameter>
+            <parameter encrypted="true" name="password">XbQOrncwxn+sMOhsnPKdS34eqEX4cjza0Tqx7lXrGyfj9fPRJmXo9cZ6oq8x9zeknNEs4LEjFddmF547Tkua6A+46Dn9Q655OpL5WPLuA3MZAH7Spq38urDQxgOYFzqwgKYNRjCgTH/vCJwvflgeE7EOUVNr4WPAXVci1zUJuXU=</parameter>
             <parameter name="path">/people/{personId}</parameter>
             <parameter name="queryMode">Data</parameter>
             <parameter name="schema">/openapi</parameter>
